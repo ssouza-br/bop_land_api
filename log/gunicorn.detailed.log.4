@@ -1,0 +1,61 @@
+[2024-03-23 21:28:54,570] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:28:54] "[36mGET /openapi/static/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:28:54,572] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:28:54] "[36mGET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:28:54,573] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:28:54] "[36mGET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:28:54,767] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:28:54] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:28:54,792] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:28:54] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:29:22,872] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:29:22] "POST /bop HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:30:30,464] ERROR log_exception() L828  Exception on /valvula [POST] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
+    response = func(**func_kwargs)
+  File "/home/slsn/repos/bop_land_api/app.py", line 249, in add_valvula
+    return apresenta_produto(bop), 200
+  File "/home/slsn/repos/bop_land_api/schemas/produto.py", line 68, in apresenta_produto
+    "nome": produto.nome,
+AttributeError: 'BOP' object has no attribute 'nome'
+[2024-03-23 21:30:30,465] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:30:30] "[35m[1mPOST /valvula HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:32:20,908] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:32:20,908] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:32:28,052] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:32:28] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:32:28,074] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:32:28] "GET /openapi/static/css/swagger-ui.css HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:32:28,075] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:32:28] "GET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:32:28,075] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:32:28] "GET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:32:28,193] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:32:28] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:32:28,201] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:32:28] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:33:00,533] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:33:00] "POST /valvula HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:33:09,774] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:33:09] "POST /valvula HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:42:42,807] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:42:42,807] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:42:46,819] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:42:46] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:42:46,855] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:42:46] "[36mGET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:42:46,856] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:42:46] "[36mGET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:42:46,857] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:42:46] "[36mGET /openapi/static/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:42:47,008] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:42:47] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:42:47,032] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:42:47] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:43:14,208] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:43:14] "POST /preventor HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:54:37,295] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:54:37,296] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:54:40,924] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:54:40] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:54:40,941] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:54:40] "GET /openapi/static/css/swagger-ui.css HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:54:40,944] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:54:40] "GET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:54:40,945] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:54:40] "GET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:54:41,060] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:54:41] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  

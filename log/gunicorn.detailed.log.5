@@ -1,0 +1,86 @@
+[2024-03-23 21:19:04,298] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:19:04] "GET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:19:04,441] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:19:04] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:19:04,491] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:19:04] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:19:26,142] ERROR log_exception() L828  Exception on /bop [POST] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
+    response = func(**func_kwargs)
+  File "/home/slsn/repos/bop_land_api/app.py", line 192, in add_bop
+    tipo=form.tipo)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/pydantic/main.py", line 767, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'BOPViewSchema' object has no attribute 'tipo'
+[2024-03-23 21:19:26,144] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:19:26] "[35m[1mPOST /bop HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:21:14,508] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:21:14,509] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:22:54,361] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:22:54,361] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:23:38,130] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:23:38] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:23:38,147] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:23:38] "[36mGET /openapi/static/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:23:38,152] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:23:38] "[36mGET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:23:38,153] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:23:38] "[36mGET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:23:38,307] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:23:38] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:23:38,315] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:23:38] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:23:48,156] ERROR log_exception() L828  Exception on /bop [POST] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
+    response = func(**func_kwargs)
+  File "/home/slsn/repos/bop_land_api/app.py", line 192, in add_bop
+    tipo=form.tipo)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/pydantic/main.py", line 767, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'BOPViewSchema' object has no attribute 'tipo'
+[2024-03-23 21:23:48,157] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:23:48] "[35m[1mPOST /bop HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:26:09,107] ERROR log_exception() L828  Exception on /bop [POST] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
+    response = func(**func_kwargs)
+  File "/home/slsn/repos/bop_land_api/app.py", line 192, in add_bop
+    tipo=form.tipo)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/pydantic/main.py", line 767, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'BOPViewSchema' object has no attribute 'tipo'
+[2024-03-23 21:26:09,108] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:26:09] "[35m[1mPOST /bop HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:26:51,676] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:26:51] "POST /produto HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:28:51,631] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:28:51,631] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-23 21:28:54,546] INFO _log() L96   127.0.0.1 - - [23/Mar/2024 21:28:54] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
