@@ -19,8 +19,8 @@ class BOP(Base):
     # Essa relação é implicita, não está salva na tabela 'produto',
     # mas aqui estou deixando para SQLAlchemy a responsabilidade
     # de reconstruir esse relacionamento.
-    valvulas = relationship("Valvula")
-    preventores = relationship("Preventor")
+    valvulas = relationship("Valvula", back_populates="bop")
+    preventores = relationship("Preventor", back_populates="bop")
 
     def __init__(self, sonda:str, tipo:int):
         """

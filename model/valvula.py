@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from typing import Union
 
@@ -15,7 +16,8 @@ class Valvula(Base):
     # Aqui está sendo definido a coluna 'produto' que vai guardar
     # a referencia ao produto, a chave estrangeira que relaciona
     # um produto ao comentário.
-    bop = Column(Integer, ForeignKey("bop.pk_bop"), nullable=False)
+    bop_id = Column(Integer, ForeignKey("bop.pk_bop"), nullable=False)
+    bop = relationship("BOP", back_populates="valvulas")
 
     def __init__(self, acronimo:str):
         """

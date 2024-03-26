@@ -1,3 +1,4 @@
+import json
 from pydantic import BaseModel
 from typing import Optional, List
 from model.bop import BOP
@@ -36,6 +37,8 @@ def apresenta_bops(bops: List[BOP]):
         result.append({
             "sonda": bop.sonda,
             "tipo": bop.tipo,
+            "valvulas": [v.acronimo for v in bop.valvulas],
+            "preventores": [p.acronimo for p in bop.preventores],
         })
 
     return {"bops": result}
@@ -59,15 +62,17 @@ class BOPDelSchema(BaseModel):
     mesage: str
     sonda: str
 
-def apresenta_bop(BOP: BOP):
+def apresenta_bop(bop: BOP):
     """ Retorna uma representação do BOP seguindo o schema definido em
         BOPViewSchema.
     """
-    return {
-        "sonda": BOP.sonda,
-        "tipo": BOP.tipo,
-        "total_valvulas": len(BOP.valvulas),
-        "valvulas": [{"acronimo": v.acronimo} for v in BOP.valvulas],
-        "total_preventores": len(BOP.preventores),
-        "preventores": [{"acronimo": p.acronimo} for p in BOP.preventores]
-    }
+    
+    result = []
+    result.append({
+        "sonda": bop.sonda,
+        "tipo": bop.tipo,
+        "valvulas": [v.acronimo for v in bop.valvulas],
+        "preventores": [p.acronimo for p in bop.preventores],
+    })
+
+    return {"bops": result}
