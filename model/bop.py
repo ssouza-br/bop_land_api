@@ -1,9 +1,7 @@
-from sqlalchemy import Column, String, Integer, DateTime, Float
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
-from datetime import datetime
-from typing import Union
 
-from  model import Base, Comentario
+from  model import Base
 from model.preventor import Preventor
 from model.valvula import Valvula
 
@@ -13,7 +11,6 @@ class BOP(Base):
 
     id = Column("pk_bop", Integer, primary_key=True)
     sonda = Column(String(140), unique=True)
-    tipo = Column(Integer)
 
     # Definição do relacionamento entre o produto e o comentário.
     # Essa relação é implicita, não está salva na tabela 'produto',
@@ -22,16 +19,14 @@ class BOP(Base):
     valvulas = relationship("Valvula", back_populates="bop")
     preventores = relationship("Preventor", back_populates="bop")
 
-    def __init__(self, sonda:str, tipo:int):
+    def __init__(self, sonda:str):
         """
         Cria um BOP
 
         Arguments:
             sonda: sonda na qual esse BOP pertence
-            tipo: tipo de BOP para efeito do algoritimo de teste
         """
         self.sonda = sonda
-        self.tipo = tipo
 
     def adiciona_valvula(self, valvula:Valvula):
         """ Adiciona uma nova válvula ao BOP

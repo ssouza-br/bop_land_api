@@ -1,29 +1,32 @@
+from typing import List
 from flask_openapi3 import OpenAPI, Info, Tag
-from flask import redirect
+from flask import redirect, session
 from urllib.parse import unquote
 
 from sqlalchemy.exc import IntegrityError
 
-from model import Session, Produto, Comentario
+from model import Session
 from logger import logger
 from model.bop import BOP
 from model.preventor import Preventor
+from model.usuario import Usuario
 from model.valvula import Valvula
 from schemas import *
 from flask_cors import CORS
 
-from schemas.bop import BOPBuscaSchema, BOPViewSchema, apresenta_bop, apresenta_bops
-from schemas.preventor import PreventorSchema
-from schemas.valvula import ValvulaSchema
+from schemas.bop import BOPBuscaSchema, BOPViewSchema, ListagemBOPsSchema, apresenta_bop, apresenta_bops
+from schemas.preventor import PreventorSchema, apresenta_preventores
+from schemas.usuario import UsuarioSchema, UsuarioViewSchema, apresenta_usuario
+from schemas.valvula import ValvulaSchema, apresenta_valvulas
 
 info = Info(title="Minha API", version="1.0.0")
 app = OpenAPI(__name__, info=info)
+app.secret_key = 'secret_key'
 CORS(app)
 
 # definindo tags
 home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")
-produto_tag = Tag(name="Produto", description="Adição, visualização e remoção de produtos à base")
-comentario_tag = Tag(name="Comentario", description="Adição de um comentário à um produtos cadastrado na base")
+usuario_tag = Tag(name="Usuario", description="Adição, visualização e remoção de usuários à base")
 bop_tag = Tag(name="BOP", description="Adição, visualização e remoção de BOPs à base")
 valvula_tag = Tag(name="Valvula", description="Adição de uma válvula a um BOP cadastrado na base")
 preventor_tag = Tag(name="Preventor", description="Adição de um preventor a um BOP cadastrado na base")
@@ -34,165 +37,82 @@ def home():
     """
     return redirect('/openapi')
 
+###### API de usuario ####################
 
-@app.post('/produto', tags=[produto_tag],
-          responses={"200": ProdutoViewSchema, "409": ErrorSchema, "400": ErrorSchema})
-def add_produto(form: ProdutoSchema):
-    """Adiciona um novo Produto à base de dados
+@app.post('/cadastro', tags=[usuario_tag],
+          responses={"200": UsuarioViewSchema, "409": ErrorSchema, "400": ErrorSchema})
+def cadastro_usuario(form: UsuarioSchema):
+        nome = form.nome
+        email = form.email
+        senha = form.senha
 
-    Retorna uma representação dos produtos e comentários associados.
-    """
-    produto = Produto(
-        nome=form.nome,
-        quantidade=form.quantidade,
-        valor=form.valor)
-    logger.debug(f"Adicionando produto de nome: '{produto.nome}'")
-    try:
-        # criando conexão com a base
-        session = Session()
-        # adicionando produto
-        session.add(produto)
-        # efetivando o camando de adição de novo item na tabela
-        session.commit()
-        logger.debug(f"Adicionado produto de nome: '{produto.nome}'")
-        return apresenta_produto(produto), 200
+        novo_usuario = Usuario(nome=nome,email=email,senha=senha)
+        
+        try:
+            # criando conexão com a base
+            session = Session()
+            # adicionando bop
+            session.add(novo_usuario)
+            # efetivando o camando de adição de novo item na tabela
+            session.commit()
+            logger.debug(f"Adicionado usuário: '{novo_usuario.email}'")
+            return apresenta_usuario(novo_usuario), 200
 
-    except IntegrityError as e:
-        # como a duplicidade do nome é a provável razão do IntegrityError
-        error_msg = "Produto de mesmo nome já salvo na base :/"
-        logger.warning(f"Erro ao adicionar produto '{produto.nome}', {error_msg}")
-        return {"mesage": error_msg}, 409
+        except IntegrityError as e:
+            # como a duplicidade do nome é a provável razão do IntegrityError
+            error_msg = "Usuário já cadastrado com esse email :/"
+            logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
+            return {"mesage": error_msg}, 409
 
-    except Exception as e:
-        # caso um erro fora do previsto
-        error_msg = "Não foi possível salvar novo item :/"
-        logger.warning(f"Erro ao adicionar produto '{produto.nome}', {error_msg}")
-        return {"mesage": error_msg}, 400
+        except Exception as e:
+            # caso um erro fora do previsto
+            error_msg = "Não foi possível salvar novo usuário :/"
+            logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
+            return {"mesage": error_msg}, 400
 
-
-@app.get('/produtos', tags=[produto_tag],
-         responses={"200": ListagemProdutosSchema, "404": ErrorSchema})
-def get_produtos():
-    """Faz a busca por todos os Produto cadastrados
-
-    Retorna uma representação da listagem de produtos.
-    """
-    logger.debug(f"Coletando produtos ")
-    # criando conexão com a base
-    session = Session()
-    # fazendo a busca
-    produtos = session.query(Produto).all()
-
-    if not produtos:
-        # se não há produtos cadastrados
-        return {"produtos": []}, 200
-    else:
-        logger.debug(f"%d rodutos econtrados" % len(produtos))
-        # retorna a representação de produto
-        print(produtos)
-        return apresenta_produtos(produtos), 200
-
-
-@app.get('/produto', tags=[produto_tag],
-         responses={"200": ProdutoViewSchema, "404": ErrorSchema})
-def get_produto(query: ProdutoBuscaSchema):
-    """Faz a busca por um Produto a partir do id do produto
-
-    Retorna uma representação dos produtos e comentários associados.
-    """
-    produto_id = query.id
-    logger.debug(f"Coletando dados sobre produto #{produto_id}")
-    # criando conexão com a base
-    session = Session()
-    # fazendo a busca
-    produto = session.query(Produto).filter(Produto.id == produto_id).first()
-
-    if not produto:
-        # se o produto não foi encontrado
-        error_msg = "Produto não encontrado na base :/"
-        logger.warning(f"Erro ao buscar produto '{produto_id}', {error_msg}")
-        return {"mesage": error_msg}, 404
-    else:
-        logger.debug(f"Produto econtrado: '{produto.nome}'")
-        # retorna a representação de produto
-        return apresenta_produto(produto), 200
-
-
-@app.delete('/produto', tags=[produto_tag],
-            responses={"200": ProdutoDelSchema, "404": ErrorSchema})
-def del_produto(query: ProdutoBuscaSchema):
-    """Deleta um Produto a partir do nome de produto informado
-
-    Retorna uma mensagem de confirmação da remoção.
-    """
-    produto_nome = unquote(unquote(query.nome))
-    print(produto_nome)
-    logger.debug(f"Deletando dados sobre produto #{produto_nome}")
-    # criando conexão com a base
-    session = Session()
-    # fazendo a remoção
-    count = session.query(Produto).filter(Produto.nome == produto_nome).delete()
-    session.commit()
-
-    if count:
-        # retorna a representação da mensagem de confirmação
-        logger.debug(f"Deletado produto #{produto_nome}")
-        return {"mesage": "Produto removido", "id": produto_nome}
-    else:
-        # se o produto não foi encontrado
-        error_msg = "Produto não encontrado na base :/"
-        logger.warning(f"Erro ao deletar produto #'{produto_nome}', {error_msg}")
-        return {"mesage": error_msg}, 404
-
-
-@app.post('/cometario', tags=[comentario_tag],
-          responses={"200": ProdutoViewSchema, "404": ErrorSchema})
-def add_comentario(form: ComentarioSchema):
-    """Adiciona de um novo comentário à um produtos cadastrado na base identificado pelo id
-
-    Retorna uma representação dos produtos e comentários associados.
-    """
-    produto_id  = form.produto_id
-    logger.debug(f"Adicionando comentários ao produto #{produto_id}")
-    # criando conexão com a base
-    session = Session()
-    # fazendo a busca pelo produto
-    produto = session.query(Produto).filter(Produto.id == produto_id).first()
-
-    if not produto:
-        # se produto não encontrado
-        error_msg = "Produto não encontrado na base :/"
-        logger.warning(f"Erro ao adicionar comentário ao produto '{produto_id}', {error_msg}")
-        return {"mesage": error_msg}, 404
-
-    # criando o comentário
-    texto = form.texto
-    comentario = Comentario(texto)
-
-    # adicionando o comentário ao produto
-    produto.adiciona_comentario(comentario)
-    session.commit()
-
-    logger.debug(f"Adicionado comentário ao produto #{produto_id}")
-
-    # retorna a representação de produto
-    return apresenta_produto(produto), 200
-
-
-
+@app.post('/login', tags=[usuario_tag],
+          responses={"200": UsuarioViewSchema, "409": ErrorSchema, "400": ErrorSchema})
+def login(form: UsuarioSchema):
+        email = form.email
+        senha = form.senha
+        
+        session_db = Session()
+        usuario = session_db.query(Usuario).filter_by(email=email).first()
+        
+        if usuario and usuario.checa_senha(senha):
+            # cria e guarda os dados do usuário em variável de sessão para uso posterior
+            session['nome'] = usuario.nome
+            session['email'] = usuario.email
+            return apresenta_usuario(usuario)
+        else:
+            # caso um erro fora do previsto
+            error_msg = "Senha ou email não encontrado no sistema :/"
+            logger.warning(f"Erro ao buscar o usuário '{usuario.email}', {error_msg}")
+            return {"mesage": error_msg}, 400
+            
+          
 ###### IMPLEMEMENTAÇÃO NOVA##############
 
 @app.post('/bop', tags=[bop_tag],
-          responses={"200": ProdutoViewSchema, "409": ErrorSchema, "400": ErrorSchema})
+          responses={"200": BOPViewSchema, "409": ErrorSchema, "400": ErrorSchema})
 def add_bop(form: BOPViewSchema):
     """Adiciona um novo BOP a base de dados
 
     Retorna uma representação dos BOPs com válvulas e preventores associados.
     """
-    bop = BOP(
-        sonda=form.sonda,
-        tipo=form.tipo)
+    sonda = form.sonda
+    valvulas = form.valvulas
+    preventores = form.preventores
+    print(form)
+    # criando um BOP
+    bop = BOP(sonda=sonda)
     logger.debug(f"Adicionando BOP da sonda: '{bop.sonda}'")
+    
+    # adicionando as válvulas ao BOP criado acima
+    [bop.adiciona_valvula(Valvula(v)) for v in valvulas]
+    
+    # adicionando os preventores ao BOP criado acima
+    [bop.adiciona_preventor(Preventor(p)) for p in preventores]
     try:
         # criando conexão com a base
         session = Session()
@@ -200,7 +120,7 @@ def add_bop(form: BOPViewSchema):
         session.add(bop)
         # efetivando o camando de adição de novo item na tabela
         session.commit()
-        logger.debug(f"Adicionado BOP da sonda: '{bop.sonda}'")
+        logger.debug(f"Adicionado BOP da sonda: '{bop.sonda}' com válvulas e preventores")
         return apresenta_bop(bop), 200
 
     except IntegrityError as e:
@@ -216,7 +136,7 @@ def add_bop(form: BOPViewSchema):
         return {"mesage": error_msg}, 400
 
 @app.get('/bops', tags=[bop_tag],
-         responses={"200": ListagemProdutosSchema, "404": ErrorSchema})
+         responses={"200": ListagemBOPsSchema, "404": ErrorSchema})
 def get_bops():
     """Faz a busca por todos os BOPs cadastrados
 
@@ -245,7 +165,6 @@ def get_bop(query: BOPBuscaSchema):
     Retorna uma representação dos BOPs, válvulas e preventores associados.
     """
     bop_sonda = query.sonda
-    print(bop_sonda)
     logger.debug(f"Coletando dados sobre BOP #{bop_sonda}")
     # criando conexão com a base
     session = Session()
@@ -262,69 +181,98 @@ def get_bop(query: BOPBuscaSchema):
         # retorna a representação de bop
         return apresenta_bop(bop), 200
 
+@app.delete('/bop', tags=[bop_tag],
+         responses={"200": BOPViewSchema, "404": ErrorSchema})
+def del_bop(query: BOPBuscaSchema):
+    """Deleta um BOP a partir do nome da sonda dona desse equipamento
 
-@app.post('/valvula', tags=[valvula_tag],
-          responses={"200": BOPViewSchema, "404": ErrorSchema})
-def add_valvula(form: ValvulaSchema):
-    """Adiciona nova válvula a um BOP cadastrado na base identificado pelo id
-
-    Retorna uma representação dos BOPs coma válvulas e preventores associados.
+    Retorna uma mensagem de confirmação da remoção.
     """
-    bop_id  = form.bop_id
-    logger.debug(f"Adicionando válvulas ao BOP #{bop_id}")
+    bop_sonda = unquote(unquote(query.sonda))
+    logger.debug(f"Coletando dados sobre BOP #{bop_sonda}")
     # criando conexão com a base
     session = Session()
-    # fazendo a busca pelo BOP
-    bop = session.query(BOP).filter(BOP.id == bop_id).first()
-
-    if not bop:
-        # se BOP não encontrado
-        error_msg = "BOP não encontrado na base :/"
-        logger.warning(f"Erro ao adicionar válvula no BOP '{bop_id}', {error_msg}")
-        return {"mesage": error_msg}, 404
-
-    # criando a valvula
-    acronimo = form.acronimo
-    valvula = Valvula(acronimo)
-
-    # adicionando o comentário ao produto
-    bop.adiciona_valvula(valvula)
+    
+    # encontrando o bop a ser deletado
+    bop_id = session.query(BOP).filter(BOP.sonda == bop_sonda).first().id
+    
+    # deletando as válvulas associadas ao BOP em questão
+    del_valvulas(bop_id)
+    # deletando os preventores associados ao BOP em questão
+    del_preventores(bop_id)
+    
+    # deletando o bop
+    bop = session.query(BOP).filter(BOP.sonda == bop_sonda).delete()
     session.commit()
 
-    logger.debug(f"Adicionada válvula ao BOP #{bop_id}")
+    if bop:
+        # retorna a representação da mensagem de confirmação
+        logger.debug(f"Deletado produto #{bop_sonda}")
+        return {"mesage": "Produto removido", "id": bop_sonda}
+    else:
+        # se o produto não foi encontrado
+        error_msg = "Produto não encontrado na base :/"
+        logger.warning(f"Erro ao deletar produto #'{bop_sonda}', {error_msg}")
+        return {"mesage": error_msg}, 404
 
-    # retorna a representação de produto
-    return apresenta_bop(bop), 200
+@app.get('/valvulas', tags=[valvula_tag],
+         responses={"200": ValvulaSchema, "404": ErrorSchema})
+def get_valvulas():
+    """Faz a busca por todas  as válvulas já cadastradas
 
-@app.post('/preventor', tags=[preventor_tag],
-          responses={"200": BOPViewSchema, "404": ErrorSchema})
-def add_preventor(form: PreventorSchema):
-    """Adiciona novo preventor a um BOP cadastrado na base identificado pelo id
-
-    Retorna uma representação dos BOPs com válvulas e preventores associados.
+    Retorna uma representação da listagem de Válvulas.
     """
-    bop_id  = form.bop_id
-    logger.debug(f"Adicionando válvulas ao BOP #{bop_id}")
+    logger.debug(f"Coletando Válvulas ")
     # criando conexão com a base
     session = Session()
-    # fazendo a busca pelo BOP
-    bop = session.query(BOP).filter(BOP.id == bop_id).first()
+    # fazendo a busca
+    valvulas = session.query(Valvula.acronimo).distinct().all()
 
-    if not bop:
-        # se BOP não encontrado
-        error_msg = "BOP não encontrado na base :/"
-        logger.warning(f"Erro ao adicionar válvula no BOP '{bop_id}', {error_msg}")
-        return {"mesage": error_msg}, 404
+    if not valvulas:
+        # se não há valvulas cadastrados
+        return {"valvulas": []}, 200
+    else:
+        logger.debug(f"%d Válvulas encontradas" % len(valvulas))
+        # retorna a representação de BOP
+        return apresenta_valvulas(valvulas), 200
+    
+@app.get('/preventores', tags=[preventor_tag],
+         responses={"200": PreventorSchema, "404": ErrorSchema})
+def get_preventores():
+    """Faz a busca por todas os preventores já cadastrados
 
-    # criando a preventor
-    acronimo = form.acronimo
-    preventor = Preventor(acronimo)
+    Retorna uma representação da listagem de Preventores.
+    """
+    logger.debug(f"Coletando Preventores ")
+    # criando conexão com a base
+    session = Session()
+    # fazendo a busca
+    preventores = session.query(Preventor.acronimo).distinct().all()
 
-    # adicionando o comentário ao produto
-    bop.adiciona_preventor(preventor)
+    if not preventores:
+        # se não há preventores cadastrados
+        return {"preventores": []}, 200
+    else:
+        logger.debug(f"%d Válvulas encontradas" % len(preventores))
+        # retorna a representação de BOP
+        return apresenta_preventores(preventores), 200
+
+def del_valvulas(bop_id):
+    session = Session()
+    
+    # encontrando as válvulas associadas ao BOP em questão
+    valvulas = session.query(Valvula).filter(Valvula.bop_id == bop_id).all()
+    
+    #deletando válvula por válvula associada a esse BOP
+    [session.query(Valvula).filter(Valvula.id == v.id).delete() for v in valvulas]
     session.commit()
 
-    logger.debug(f"Adicionada válvula ao BOP #{bop_id}")
-
-    # retorna a representação de produto
-    return apresenta_bop(bop), 200
+def del_preventores(bop_id):
+    session = Session()
+    
+    # encontrando as válvulas associadas ao BOP em questão
+    preventores = session.query(Preventor).filter(Preventor.bop_id == bop_id).all()
+    
+    #deletando válvula por válvula associada a esse BOP
+    [session.query(Preventor).filter(Preventor.id == p.id).delete() for p in preventores]
+    session.commit()

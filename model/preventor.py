@@ -1,7 +1,5 @@
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from datetime import datetime
-from typing import Union
 
 from  model import Base
 
@@ -27,3 +25,5 @@ class Preventor(Base):
             acrônimo: acronimo para identificação do preventor.
         """
         self.acronimo = acronimo
+        
+    

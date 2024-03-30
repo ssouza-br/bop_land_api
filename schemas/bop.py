@@ -1,19 +1,11 @@
-import json
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import List
 from model.bop import BOP
-from model.produto import Produto
-
-from schemas import ComentarioSchema
-from schemas.preventor import PreventorSchema
-from schemas.valvula import ValvulaSchema
-
 
 class BOPSchema(BaseModel):
     """ Define como um novo produto a ser inserido deve ser representado
     """
     sonda: str = "NSXX"
-    tipo: int = 1
 
 class BOPBuscaSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca. Que será
@@ -36,7 +28,6 @@ def apresenta_bops(bops: List[BOP]):
     for bop in bops:
         result.append({
             "sonda": bop.sonda,
-            "tipo": bop.tipo,
             "valvulas": [v.acronimo for v in bop.valvulas],
             "preventores": [p.acronimo for p in bop.preventores],
         })
@@ -47,12 +38,9 @@ def apresenta_bops(bops: List[BOP]):
 class BOPViewSchema(BaseModel):
     """ Define como um BOP será retornado: BOP + válvulas + preventores.
     """
-    sonda: str = "NSXX"
-    tipo: Optional[int] = 1
-    total_valvulas: int = 1
-    valvulas:List[ValvulaSchema]    
-    total_preventores: int = 1
-    preventores:List[PreventorSchema]
+    sonda: str
+    valvulas: List[str]    
+    preventores: List[str]
 
 
 class BOPDelSchema(BaseModel):
@@ -70,7 +58,6 @@ def apresenta_bop(bop: BOP):
     result = []
     result.append({
         "sonda": bop.sonda,
-        "tipo": bop.tipo,
         "valvulas": [v.acronimo for v in bop.valvulas],
         "preventores": [p.acronimo for p in bop.preventores],
     })
