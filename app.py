@@ -1,6 +1,5 @@
-from typing import List
 from flask_openapi3 import OpenAPI, Info, Tag
-from flask import redirect, session
+from flask import jsonify, redirect
 from urllib.parse import unquote
 
 from sqlalchemy.exc import IntegrityError
@@ -14,15 +13,21 @@ from model.valvula import Valvula
 from schemas import *
 from flask_cors import CORS
 
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 from schemas.bop import BOPBuscaSchema, BOPViewSchema, ListagemBOPsSchema, apresenta_bop, apresenta_bops
 from schemas.preventor import PreventorSchema, apresenta_preventores
-from schemas.usuario import UsuarioSchema, UsuarioViewSchema, apresenta_usuario
+from schemas.usuario import UsuarioLoginSchema, UsuarioSchema, UsuarioViewSchema, apresenta_usuario
 from schemas.valvula import ValvulaSchema, apresenta_valvulas
 
 info = Info(title="Minha API", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 app.secret_key = 'secret_key'
 CORS(app)
+jwt = JWTManager(app)
 
 # definindo tags
 home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")
@@ -62,35 +67,44 @@ def cadastro_usuario(form: UsuarioSchema):
             # como a duplicidade do nome é a provável razão do IntegrityError
             error_msg = "Usuário já cadastrado com esse email :/"
             logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
-            return {"mesage": error_msg}, 409
+            return {"message": error_msg}, 409
 
         except Exception as e:
             # caso um erro fora do previsto
             error_msg = "Não foi possível salvar novo usuário :/"
             logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
-            return {"mesage": error_msg}, 400
+            return {"message": error_msg}, 400
 
 @app.post('/login', tags=[usuario_tag],
           responses={"200": UsuarioViewSchema, "409": ErrorSchema, "400": ErrorSchema})
-def login(form: UsuarioSchema):
+def login(form: UsuarioLoginSchema):
         email = form.email
         senha = form.senha
         
-        session_db = Session()
-        usuario = session_db.query(Usuario).filter_by(email=email).first()
+        session = Session()
+        usuario = session.query(Usuario).filter_by(email=email).first()
         
         if usuario and usuario.checa_senha(senha):
             # cria e guarda os dados do usuário em variável de sessão para uso posterior
-            session['nome'] = usuario.nome
-            session['email'] = usuario.email
-            return apresenta_usuario(usuario)
+            access_token = create_access_token(identity=email)
+            # return apresenta_usuario(usuario), 200
+            return jsonify(access_token=access_token)
         else:
             # caso um erro fora do previsto
             error_msg = "Senha ou email não encontrado no sistema :/"
-            logger.warning(f"Erro ao buscar o usuário '{usuario.email}', {error_msg}")
-            return {"mesage": error_msg}, 400
-            
-          
+            logger.warning(f"Erro ao buscar o usuário '{email}', {error_msg}")
+            return {"message": error_msg}, 400
+
+@app.get('/usuario', tags=[usuario_tag],
+          responses={"200": UsuarioLoginSchema, "409": ErrorSchema, "400": ErrorSchema})
+@jwt_required()
+def get_dado_secao():
+    current_user = get_jwt_identity()
+    if current_user:
+        session = Session()
+        usuario = session.query(Usuario).filter_by(email=current_user).first()
+        return apresenta_usuario(usuario), 200
+              
 ###### IMPLEMEMENTAÇÃO NOVA##############
 
 @app.post('/bop', tags=[bop_tag],
