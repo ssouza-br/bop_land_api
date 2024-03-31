@@ -1,3 +1,4 @@
+import datetime
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import jsonify, redirect
 from urllib.parse import unquote
@@ -26,6 +27,8 @@ from schemas.valvula import ValvulaSchema, apresenta_valvulas
 info = Info(title="Minha API", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 app.secret_key = 'secret_key'
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+
 CORS(app)
 jwt = JWTManager(app)
 
@@ -86,7 +89,7 @@ def login(form: UsuarioLoginSchema):
         
         if usuario and usuario.checa_senha(senha):
             # cria e guarda os dados do usuário em variável de sessão para uso posterior
-            access_token = create_access_token(identity=email)
+            access_token = create_access_token(identity=email, expires_delta=datetime.timedelta(minutes=10))
             # return apresenta_usuario(usuario), 200
             return jsonify(access_token=access_token)
         else:

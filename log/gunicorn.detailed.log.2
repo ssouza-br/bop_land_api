@@ -1,89 +1,45 @@
-[2024-03-31 10:05:40,566] ERROR log_exception() L828  Exception on /login [POST] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/app.py", line 90, in login
-    access_token = create_access_token(identity=usuario)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 175, in create_access_token
-    return jwt_manager._encode_jwt_from_config(
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/jwt_manager.py", line 515, in _encode_jwt_from_config
-    return _encode_jwt(
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/tokens.py", line 68, in _encode_jwt
-    return jwt.encode(
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/jwt/api_jwt.py", line 67, in encode
-    json_payload = self._encode_payload(
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/jwt/api_jwt.py", line 94, in _encode_payload
-    return json.dumps(
-  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
-    **kw).encode(obj)
-  File "/usr/lib/python3.10/json/encoder.py", line 199, in encode
-    chunks = self.iterencode(o, _one_shot=True)
-  File "/usr/lib/python3.10/json/encoder.py", line 257, in iterencode
-    return _iterencode(o, 0)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/internal_utils.py", line 78, in default
-    return default(o)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 121, in _default
-    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
-TypeError: Object of type Usuario is not JSON serializable
-[2024-03-31 10:05:40,572] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:05:40] "[35m[1mPOST /login HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:06:11,937] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:06:11,937] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:06:14,498] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:06:14] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:09:58,035] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:09:58] "GET /secao HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:12:14,276] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:12:14] "[31m[1mGET /secao HTTP/1.1[0m" 400 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:12:51,010] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:12:51] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:14:07,895] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:14:07] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:14:10,560] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:14:10] "[31m[1mGET /secao HTTP/1.1[0m" 400 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:14:49,539] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:14:49,539] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:15:35,256] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:15:35] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:15:40,532] ERROR log_exception() L828  Exception on /secao [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/app.py", line 102, in get_dado_secao
-    current_user = get_jwt_identity()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 63, in get_jwt_identity
-    return get_jwt().get(config.identity_claim_key, None)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 29, in get_jwt
-    raise RuntimeError(
-RuntimeError: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
-[2024-03-31 10:15:40,534] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:15:40] "[35m[1mGET /secao HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:16:44,924] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:16:44,924] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:17:55,539] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:17:55] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:18:00,657] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:18:00] "[31m[1mGET /secao HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:33:04,260] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:33:04] "[31m[1mGET /secao HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:33:26,848] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:33:26] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 10:34:14,598] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 10:34:14] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 11:01:14,633] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 11:01:14] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 11:01:23,052] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 11:01:23] "OPTIONS /secao HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:24:18,529] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:24:18] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:24:22,416] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:24:22] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:24:23,465] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:24:23] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:24:23,474] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:24:23] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:24:24,296] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:24:24] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:24:25,044] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:24:25] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:24:25,051] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:24:25] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:24:26,230] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:24:26] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:25:56,074] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:25:56] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:25:56,081] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:25:56] "GET /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:02,348] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:02] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:02,360] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:02] "[31m[1mGET /usuario HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:27,073] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:27] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:32,328] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:32] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:32,339] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:32] "GET /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:35,092] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:35] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:36,856] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:36] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:36,862] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:36] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:39,558] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:39] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:40,484] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:40] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:40,496] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:40] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:42,988] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:42] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:43,775] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:43] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:43,789] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:43] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:46,248] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:46] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:27:46,255] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:27:46] "[31m[1mGET /usuario HTTP/1.1[0m" 422 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:29:16,356] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:29:16] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:29:16,360] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:29:16] "[31m[1mGET /usuario HTTP/1.1[0m" 422 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:38:07,479] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:38:07] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:38:07,483] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:38:07] "[31m[1mGET /usuario HTTP/1.1[0m" 422 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:39:30,918] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:39:30] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:39:39,609] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:39:39] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:39:44,286] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:39:44] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:39:44,298] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:39:44] "GET /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:41:12,979] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:41:12] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:41:22,530] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:41:22] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:41:22,536] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:41:22] "GET /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:41:37,904] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:41:37] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:41:37,908] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:41:37] "[31m[1mGET /usuario HTTP/1.1[0m" 422 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:41:55,734] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:41:55] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:41:55,740] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:41:55] "[31m[1mGET /usuario HTTP/1.1[0m" 422 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:41:55,931] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:41:55] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:46:01,702] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:46:01] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:46:01,707] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:46:01] "[31m[1mGET /usuario HTTP/1.1[0m" 422 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-03-31 20:46:03,129] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:46:03] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
