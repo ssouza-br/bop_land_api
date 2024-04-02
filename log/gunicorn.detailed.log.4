@@ -1,100 +1,45 @@
-[2024-03-31 20:20:42,582] ERROR log_exception() L828  Exception on /bops [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/app.py", line 166, in get_bops
-    bops = session.query(BOP).all()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2673, in all
-    return self._iter().all()  # type: ignore
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
-    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2306, in execute
-    return self._execute_internal(
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2181, in _execute_internal
-    conn = self._connection_for_bind(bind)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2050, in _connection_for_bind
-    return trans._connection_for_bind(engine, execution_options)
-  File "<string>", line 2, in _connection_for_bind
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
-    ret_value = fn(self, *arg, **kw)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 1144, in _connection_for_bind
-    conn = bind.connect()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 3280, in connect
-    return self._connection_cls(self)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
-    self._dbapi_connection = engine.raw_connection()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 3304, in raw_connection
-    return self.pool.connect()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/pool/base.py", line 449, in connect
-    return _ConnectionFairy._checkout(self)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
-    fairy = _ConnectionRecord.checkout(pool)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
-    rec = pool._do_get()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/pool/impl.py", line 168, in _do_get
-    raise exc.TimeoutError(
-sqlalchemy.exc.TimeoutError: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
-[2024-03-31 20:20:42,584] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:20:42] "[35m[1mGET /bops HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 20:20:44,601] ERROR log_exception() L828  Exception on /valvulas [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/app.py", line 246, in get_valvulas
-    valvulas = session.query(Valvula.acronimo).distinct().all()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2673, in all
-    return self._iter().all()  # type: ignore
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
-    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2306, in execute
-    return self._execute_internal(
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2181, in _execute_internal
-    conn = self._connection_for_bind(bind)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2050, in _connection_for_bind
-    return trans._connection_for_bind(engine, execution_options)
-  File "<string>", line 2, in _connection_for_bind
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
-    ret_value = fn(self, *arg, **kw)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 1144, in _connection_for_bind
-    conn = bind.connect()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 3280, in connect
-    return self._connection_cls(self)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
-    self._dbapi_connection = engine.raw_connection()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 3304, in raw_connection
-    return self.pool.connect()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/pool/base.py", line 449, in connect
-    return _ConnectionFairy._checkout(self)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
-    fairy = _ConnectionRecord.checkout(pool)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
-    rec = pool._do_get()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/pool/impl.py", line 168, in _do_get
-    raise exc.TimeoutError(
-sqlalchemy.exc.TimeoutError: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
-[2024-03-31 20:20:44,601] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:20:44] "[35m[1mGET /valvulas HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 20:20:47,695] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:20:47] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 20:20:47,700] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:20:47] "[31m[1mGET /usuario HTTP/1.1[0m" 422 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 20:20:55,657] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:20:55] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 20:20:55,658] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:20:55] "POST /login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 20:21:20,691] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:21:20] "OPTIONS /usuario HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-03-31 20:21:20,696] INFO _log() L96   127.0.0.1 - - [31/Mar/2024 20:21:20] "[31m[1mGET /usuario HTTP/1.1[0m" 422 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:09:33,845] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:09:33] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:09:41,889] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:09:41] "GET /bop?sonda=kkk HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:09:49,855] WARNING get_bop() L194  Erro ao buscar BOP 'uuuuuu', BOP não encontrado na base :/ - call_trace=/home/slsn/repos/bop_land_api/app.py L194 
+[2024-04-02 13:09:49,856] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:09:49] "[33mGET /bop?sonda=uuuuuu HTTP/1.1[0m" 404 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:09:59,313] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:09:59] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:10:07,702] WARNING get_bop() L194  Erro ao buscar BOP 'pppppppp', BOP não encontrado na base :/ - call_trace=/home/slsn/repos/bop_land_api/app.py L194 
+[2024-04-02 13:10:07,703] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:10:07] "[33mGET /bop?sonda=pppppppp HTTP/1.1[0m" 404 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:10:09,569] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:10:09] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:10:09,576] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:10:09] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:16:02,270] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:16:02] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:16:05,649] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:16:05] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:16:05,661] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:16:05] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:16:19,636] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:16:19] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:16:19,681] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:16:19] "POST /bop HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:16:36,728] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:16:36] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:16:56,667] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:16:56] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:16:56,674] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:16:56] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:17:07,525] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:17:07] "POST /bop HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:17:07,531] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:17:07] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:19:07,017] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:19:07] "GET /valvulas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:19:07,036] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:19:07] "GET /preventores HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:19:17,140] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:19:17] "POST /bop HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:19:17,144] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:19:17] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:21:45,170] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:21:45] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:21:58,552] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:21:58] "OPTIONS /bop?sonda=xxxx HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:21:58,614] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:21:58] "DELETE /bop?sonda=xxxx HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:03,911] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:03] "OPTIONS /bop?sonda=aaa HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:03,943] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:03] "DELETE /bop?sonda=aaa HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:22,503] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:22] "GET /bops HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:29,482] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:29] "OPTIONS /bop?sonda=ddd HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:29,512] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:29] "DELETE /bop?sonda=ddd HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:34,009] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:34] "OPTIONS /bop?sonda=xx HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:34,040] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:34] "DELETE /bop?sonda=xx HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:37,580] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:37] "OPTIONS /bop?sonda=uuu HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:37,605] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:37] "DELETE /bop?sonda=uuu HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:40,283] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:40] "OPTIONS /bop?sonda=bbbb HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:40,308] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:40] "DELETE /bop?sonda=bbbb HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:43,895] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:43] "OPTIONS /bop?sonda=cccc HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:43,925] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:43] "DELETE /bop?sonda=cccc HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:47,999] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:47] "OPTIONS /bop?sonda=p HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:48,024] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:48] "DELETE /bop?sonda=p HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:51,317] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:51] "OPTIONS /bop?sonda=kkk HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:51,374] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:51] "DELETE /bop?sonda=kkk HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:54,519] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:54] "OPTIONS /bop?sonda=b HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-02 13:22:54,552] INFO _log() L96   127.0.0.1 - - [02/Apr/2024 13:22:54] "DELETE /bop?sonda=b HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
