@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from model.bop import BOP
 
 class BOPSchema(BaseModel):
@@ -11,7 +11,7 @@ class BOPBuscaSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca. Que será
         feita apenas com base no nome da sonda dona do BOP.
     """
-    sonda: str = "Teste"
+    sonda: Optional[str] = None
 
 
 class ListagemBOPsSchema(BaseModel):
@@ -32,7 +32,7 @@ def apresenta_bops(bops: List[BOP]):
             "preventores": [p.acronimo for p in bop.preventores],
         })
 
-    return {"bops": result}
+    return {"content": result}
 
 
 class BOPViewSchema(BaseModel):
@@ -49,17 +49,3 @@ class BOPDelSchema(BaseModel):
     """
     mesage: str
     sonda: str
-
-def apresenta_bop(bop: BOP):
-    """ Retorna uma representação do BOP seguindo o schema definido em
-        BOPViewSchema.
-    """
-    
-    result = []
-    result.append({
-        "sonda": bop.sonda,
-        "valvulas": [v.acronimo for v in bop.valvulas],
-        "preventores": [p.acronimo for p in bop.preventores],
-    })
-
-    return {"bops": result}
