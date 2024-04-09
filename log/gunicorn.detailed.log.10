@@ -1,69 +1,35 @@
-[2024-04-09 10:33:22,889] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 10:33:22] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 10:33:22,897] ERROR log_exception() L828  Exception on /auth/ [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/blueprints/auth.py", line 72, in get_dado_secao
-    current_user = get_jwt_identity()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 63, in get_jwt_identity
-    return get_jwt().get(config.identity_claim_key, None)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 29, in get_jwt
-    raise RuntimeError(
-RuntimeError: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
-[2024-04-09 10:33:22,898] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 10:33:22] "[35m[1mGET /auth/ HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 10:58:36,020] ERROR log_exception() L828  Exception on /auth/ [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/blueprints/auth.py", line 72, in get_dado_secao
-    current_user = get_jwt_identity()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 63, in get_jwt_identity
-    return get_jwt().get(config.identity_claim_key, None)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 29, in get_jwt
-    raise RuntimeError(
-RuntimeError: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
-[2024-04-09 10:58:36,021] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 10:58:36] "[35m[1mGET /auth/ HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 10:58:50,808] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 10:58:50] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 10:58:51,314] ERROR log_exception() L828  Exception on /auth/ [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/blueprints/auth.py", line 72, in get_dado_secao
-    current_user = get_jwt_identity()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 63, in get_jwt_identity
-    return get_jwt().get(config.identity_claim_key, None)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/utils.py", line 29, in get_jwt
-    raise RuntimeError(
-RuntimeError: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
-[2024-04-09 10:58:51,315] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 10:58:51] "[35m[1mGET /auth/ HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:05:58,822] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/auth.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:33:23,608] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:23] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:33:24,627] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:24] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:33:24,631] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:24] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:33:27,592] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:27] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:33:27,595] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:27] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:33:41,957] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:41] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:33:42,472] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:42] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:33:42,478] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:42] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:36:56,262] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:36:56] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:36:56,265] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:36:56] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:37:05,357] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:05] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:37:05,872] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:05] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:37:05,876] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:05] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:37:17,654] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:17] "OPTIONS /bop/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:37:17,665] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:17] "[31m[1mGET /bop/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:37:22,531] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:22] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:37:22,541] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:22] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:10,352] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:10] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:10,360] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:10] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:20,122] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:20] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:20,630] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:20] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:20,633] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:20] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:51,258] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:51] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:51,263] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:51] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:52,288] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:52] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:38:52,292] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:52] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:39:01,936] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:39:01] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:39:02,457] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:39:02] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:39:02,461] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:39:02] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:55:29,554] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:29] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:55:29,871] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:29] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:55:43,427] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:43] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:55:43,946] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:43] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:55:44,255] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:44] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 11:59:00,825] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/app.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  

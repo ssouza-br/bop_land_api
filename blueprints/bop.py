@@ -62,18 +62,18 @@ def add_bop(form: BOPViewSchema):
         # como a duplicidade do nome é a provável razão do IntegrityError
         error_msg = "BOP dessa sonda já salvo na base :/"
         logger.warning(f"Erro ao adicionar produto '{bop.sonda}', {error_msg}")
-        return {"message": error_msg}, 409
+        return {"mensagem": error_msg}, 409
 
     except Exception:
         # caso um erro fora do previsto
         error_msg = "Não foi possível salvar novo BOP :/"
         logger.warning(f"Erro ao adicionar BOP '{bop.sonda}', {error_msg}")
-        return {"message": error_msg}, 400
+        return {"mensagem": error_msg}, 400
 
 @bp.get('/', responses={"200": ListagemBOPsSchema})
 @jwt_required()
 def get_bop(query: BOPBuscaSchema):
-    """Faz a busca por um BOP do nome da sonda dona desse equipamento
+    """Faz a busca por um BOP do nome da sonda, caso esse campo fique vazio traz toda a lista de BOP do sistema
 
     Retorna uma representação dos BOPs, válvulas e preventores associados.
     """
@@ -89,7 +89,7 @@ def get_bop(query: BOPBuscaSchema):
             # se o bop não foi encontrado
             error_msg = "BOP não encontrado na base :/"
             logger.warning(f"Erro ao buscar BOP '{bop_sonda}', {error_msg}")
-            return {"message": error_msg}, 404
+            return {"mensagem": error_msg}, 404
         else:
             logger.debug(f"BOP encontrado: '{bop_sonda}'")
             # retorna a representação de bop
@@ -125,12 +125,12 @@ def del_bop(query: BOPBuscaSchema):
     if bop:
         # retorna a representação da mensagem de confirmação
         logger.debug(f"Deletado BOP #{bop_sonda}")
-        return {"message": "BOP removido", "sonda": bop_sonda}
+        return {"mensagem": "BOP removido", "sonda": bop_sonda}
     else:
         # se o produto não foi encontrado
         error_msg = "BOP não encontrado na base :/"
         logger.warning(f"Erro ao deletar BOP #'{bop_sonda}', {error_msg}")
-        return {"message": error_msg}, 404
+        return {"mensagem": error_msg}, 404
 
 def del_valvulas(bop_id):
     session = Session()

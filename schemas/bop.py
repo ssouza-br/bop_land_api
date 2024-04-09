@@ -17,7 +17,7 @@ class BOPBuscaSchema(BaseModel):
 class ListagemBOPsSchema(BaseModel):
     """ Define como uma listagem de BOPs será retornada.
     """
-    bops:List[BOPSchema]
+    content:List[BOPSchema]
 
 
 def apresenta_bops(bops: List[BOP]):
@@ -47,5 +47,5 @@ class BOPDelSchema(BaseModel):
     """ Define como deve ser a estrutura do dado retornado após uma requisição
         de remoção.
     """
-    mesage: str
+    mensagem: str
     sonda: str

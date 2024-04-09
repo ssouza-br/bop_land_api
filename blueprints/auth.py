@@ -46,13 +46,13 @@ def cadastro_usuario(form: UsuarioSchema):
             # como a duplicidade do nome é a provável razão do IntegrityError
             error_msg = "Usuário já cadastrado com esse email :/"
             logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
-            return {"message": error_msg}, 409
+            return {"mensagem": error_msg}, 409
 
         except Exception:
             # caso um erro fora do previsto
             error_msg = "Não foi possível salvar novo usuário :/"
             logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
-            return {"message": error_msg}, 400
+            return {"mensagem": error_msg}, 400
 
 @bp.post('/login', responses={"200": UsuarioViewSchema})
 def login(form: UsuarioLoginSchema):
@@ -71,9 +71,9 @@ def login(form: UsuarioLoginSchema):
             # caso um erro fora do previsto
             error_msg = "Senha ou email não encontrado no sistema :/"
             logger.warning(f"Erro ao buscar o usuário '{email}', {error_msg}")
-            return {"message": error_msg}, 400
+            return {"mensagem": error_msg}, 400
 
-@bp.get('/quemeusou',responses={"200": UsuarioLoginSchema})
+@bp.get('/quemeusou',responses={"200": UsuarioViewSchema})
 @jwt_required()
 def get_dado_secao():
     current_user = get_jwt_identity()
