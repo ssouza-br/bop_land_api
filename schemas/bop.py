@@ -12,6 +12,8 @@ class BOPBuscaSchema(BaseModel):
         feita apenas com base no nome da sonda dona do BOP.
     """
     sonda: Optional[str] = None
+    page: int = 1
+    per_page: int = 4
 
 
 class ListagemBOPsSchema(BaseModel):

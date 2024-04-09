@@ -1,9 +1,10 @@
 
 # from sqlite3 import IntegrityError
+from math import ceil
+from operator import itemgetter
 from urllib.parse import unquote
 from venv import logger
-from flask import make_response, request
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_jwt_extended import jwt_required
 from flask_openapi3 import APIBlueprint, Tag
 from sqlalchemy import exc
@@ -79,24 +80,74 @@ def get_bop(query: BOPBuscaSchema):
     """
     # criando conexão com a base
     session = Session()
-    
-    if query.sonda:
-        bop_sonda = query.sonda
+
+    sonda, page, per_page = query.sonda, query.page, query.per_page
+    if sonda:
+        bop_sonda = sonda
         logger.debug(f"Coletando dados sobre BOP #{bop_sonda}")
         # fazendo a busca
-        bop = session.query(BOP).filter(BOP.sonda == bop_sonda).first()
+        bop = session.query(BOP).filter(BOP.sonda.like(f'%{bop_sonda}%')).all()
         if not bop:
             # se o bop não foi encontrado
             error_msg = "BOP não encontrado na base :/"
             logger.warning(f"Erro ao buscar BOP '{bop_sonda}', {error_msg}")
             return {"mensagem": error_msg}, 404
         else:
+            total_records = session.query(BOP).filter(BOP.sonda.like(f'%{bop_sonda}%')).count()
+
+            # Calculate total pages
+            total_pages = ceil(total_records / per_page)
+
+            # Calculate whether there are more pages
+            has_next = page < total_pages
+
+            # Calculate whether there are previous pages
+            has_prev = page > 1
+            
+            # Calculate current page
+            current_page = page
+        
             logger.debug(f"BOP encontrado: '{bop_sonda}'")
             # retorna a representação de bop
-            return apresenta_bops([bop]), 200 
+            return {
+            "total_pages": total_pages,
+            "total_records": total_records,
+            "current_page": current_page,
+            "has_next": has_next,
+            "has_prev": has_prev,
+            "items": apresenta_bops(bop)
+        }, 200
     else:
-        bops = session.query(BOP).all()
-        return apresenta_bops(bops), 200 
+        # trazendo os resultados paginados e em ordem alfabética por nome da sonda
+        offset = (page - 1) * per_page
+        bops = session.query(BOP).order_by(BOP.sonda).offset(offset).limit(per_page).all()
+        # Count total number of records
+        total_records = session.query(BOP).count()
+
+        # Calculate total pages
+        total_pages = ceil(total_records / per_page)
+
+        # Calculate whether there are more pages
+        has_next = page < total_pages
+
+        # Calculate whether there are previous pages
+        has_prev = page > 1
+
+        # Perform pagination manually
+        offset = (page - 1) * per_page
+        bops = session.query(BOP).order_by(BOP.sonda).offset(offset).limit(per_page).all()
+
+        # Calculate current page
+        current_page = page
+        
+        return {
+            "total_pages": total_pages,
+            "total_records": total_records,
+            "current_page": current_page,
+            "has_next": has_next,
+            "has_prev": has_prev,
+            "items": apresenta_bops(bops)
+        }, 200
 
 @bp.delete('/', responses={"200": BOPDelSchema})
 @jwt_required()

@@ -1,35 +1,122 @@
-[2024-04-09 11:33:23,608] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:23] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:33:24,627] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:24] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:33:24,631] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:24] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:33:27,592] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:27] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:33:27,595] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:27] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:33:41,957] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:41] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:33:42,472] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:42] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:33:42,478] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:33:42] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:36:56,262] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:36:56] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:36:56,265] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:36:56] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:37:05,357] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:05] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:37:05,872] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:05] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:37:05,876] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:05] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:37:17,654] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:17] "OPTIONS /bop/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:37:17,665] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:17] "[31m[1mGET /bop/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:37:22,531] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:22] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:37:22,541] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:37:22] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:10,352] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:10] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:10,360] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:10] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:20,122] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:20] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:20,630] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:20] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:20,633] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:20] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:51,258] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:51] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:51,263] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:51] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:52,288] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:52] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:38:52,292] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:38:52] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:39:01,936] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:39:01] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:39:02,457] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:39:02] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:39:02,461] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:39:02] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:55:29,554] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:29] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:55:29,871] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:29] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:55:43,427] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:43] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:55:43,946] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:43] "OPTIONS /auth/ HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:55:44,255] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 11:55:44] "[31m[1mGET /auth/ HTTP/1.1[0m" 401 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 11:59:00,825] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/app.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 16:27:59,678] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:27:59] "[35m[1mGET /bop/?sonda=a&page=2&per_page=4 HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 16:28:10,299] ERROR log_exception() L828  Exception on /bop/ [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
+    response = func(**func_kwargs)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/view_decorators.py", line 170, in decorator
+    return current_app.ensure_sync(fn)(*args, **kwargs)
+  File "/home/slsn/repos/bop_land_api/blueprints/bop.py", line 88, in get_bop
+    bop = session.query(BOP).filter(BOP.sonda == bop_sonda).first()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2306, in execute
+    return self._execute_internal(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2191, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1422, in execute
+    return meth(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 514, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1644, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1850, in _execute_context
+    return self._exec_single_context(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1990, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2357, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.InterfaceError: (sqlite3.InterfaceError) Error binding parameter 0 - probably unsupported type.
+[SQL: SELECT bop.pk_bop AS bop_pk_bop, bop.sonda AS bop_sonda 
+FROM bop 
+WHERE bop.sonda = ?
+ LIMIT ? OFFSET ?]
+[parameters: (('sonda', None), 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+[2024-04-09 16:28:10,299] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:28:10] "[35m[1mGET /bop/?page=2&per_page=4 HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 16:28:21,694] ERROR log_exception() L828  Exception on /bop/ [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
+    response = func(**func_kwargs)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/view_decorators.py", line 170, in decorator
+    return current_app.ensure_sync(fn)(*args, **kwargs)
+  File "/home/slsn/repos/bop_land_api/blueprints/bop.py", line 88, in get_bop
+    bop = session.query(BOP).filter(BOP.sonda == bop_sonda).first()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2728, in first
+    return self.limit(1)._iter().first()  # type: ignore
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2306, in execute
+    return self._execute_internal(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2191, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1422, in execute
+    return meth(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 514, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1644, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1850, in _execute_context
+    return self._exec_single_context(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1990, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2357, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.InterfaceError: (sqlite3.InterfaceError) Error binding parameter 0 - probably unsupported type.
+[SQL: SELECT bop.pk_bop AS bop_pk_bop, bop.sonda AS bop_sonda 
+FROM bop 
+WHERE bop.sonda = ?
+ LIMIT ? OFFSET ?]
+[parameters: (('sonda', None), 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
