@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect
 
@@ -9,7 +11,7 @@ from model.valvula import Valvula
 from schemas import *
 from flask_cors import CORS
 
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required
 
 from schemas.preventor import apresenta_preventores
 from schemas.valvula import apresenta_valvulas
@@ -17,12 +19,28 @@ from schemas.valvula import apresenta_valvulas
 from blueprints import auth
 from blueprints import bop
 
-info = Info(title="Minha API", version="1.0.0")
-app = OpenAPI(__name__, info=info)
-app.secret_key = 'secret_key'
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+# JWT Bearer Sample
+jwt = {
+  "type": "http",
+  "scheme": "bearer",
+  "bearerFormat": "JWT"
+}
 
-CORS(app)
+security_schemes = {"jwt": jwt}
+
+info = Info(title="Minha API", version="1.0.0")
+app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
+
+# carregando os dados do .env
+load_dotenv()
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+
+# usado somente com cookies
+# app.config['JWT_TOKEN_LOCATION'] = os.getenv('JWT_TOKEN_LOCATION')
+# app.config['JWT_COOKIE_SECURE'] = os.getenv('JWT_COOKIE_SECURE')
+# app.config['JWT_COOKIE_CSRF_PROTECT'] = os.getenv('JWT_COOKIE_CSRF_PROTECT')
+
+CORS(app, supports_credentials=True)
 jwt = JWTManager(app)
 
 # registrando a blueprint de autenticação
@@ -43,6 +61,7 @@ def home():
     return redirect('/openapi')
 
 @app.get('/valvulas', tags=[valvula_tag])
+@jwt_required()
 def get_valvulas():
     """Faz a busca por todas  as válvulas já cadastradas
 
@@ -63,6 +82,7 @@ def get_valvulas():
         return apresenta_valvulas(valvulas), 200
     
 @app.get('/preventores', tags=[preventor_tag])
+@jwt_required()
 def get_preventores():
     """Faz a busca por todas os preventores já cadastrados
 

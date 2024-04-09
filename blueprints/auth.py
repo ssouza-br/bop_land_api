@@ -1,6 +1,6 @@
 
 import datetime
-from sqlite3 import IntegrityError
+from sqlalchemy import exc
 from venv import logger
 from flask import jsonify
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
@@ -12,8 +12,16 @@ from schemas.error import ErrorSchema
 from schemas.usuario import UsuarioLoginSchema, UsuarioSchema, UsuarioViewSchema, apresenta_usuario
 
 usuario_tag = Tag(name="Usuario", description="Adição, visualização e remoção de usuários à base")
+security = [{"jwt": []}]
 
-bp = APIBlueprint('auth', __name__, url_prefix='/auth', abp_tags=[usuario_tag], abp_responses={"400": ErrorSchema, "409": ErrorSchema}, doc_ui=True )
+bp = APIBlueprint(
+    'auth',
+    __name__, 
+    url_prefix='/auth', 
+    abp_tags=[usuario_tag],
+    abp_security=security, 
+    abp_responses={"400": ErrorSchema, "409": ErrorSchema}, 
+    doc_ui=True )
 
 @bp.post('/register', responses={"200": UsuarioViewSchema})
 def cadastro_usuario(form: UsuarioSchema):
@@ -33,13 +41,14 @@ def cadastro_usuario(form: UsuarioSchema):
             logger.debug(f"Adicionado usuário: '{novo_usuario.email}'")
             return apresenta_usuario(novo_usuario), 200
 
-        except IntegrityError as e:
+        except exc.IntegrityError:
+            session.rollback()
             # como a duplicidade do nome é a provável razão do IntegrityError
             error_msg = "Usuário já cadastrado com esse email :/"
             logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
             return {"message": error_msg}, 409
 
-        except Exception as e:
+        except Exception:
             # caso um erro fora do previsto
             error_msg = "Não foi possível salvar novo usuário :/"
             logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
@@ -64,7 +73,7 @@ def login(form: UsuarioLoginSchema):
             logger.warning(f"Erro ao buscar o usuário '{email}', {error_msg}")
             return {"message": error_msg}, 400
 
-@bp.get('/',responses={"200": UsuarioLoginSchema})
+@bp.get('/quemeusou',responses={"200": UsuarioLoginSchema})
 @jwt_required()
 def get_dado_secao():
     current_user = get_jwt_identity()
