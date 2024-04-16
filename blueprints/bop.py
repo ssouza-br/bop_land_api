@@ -1,7 +1,5 @@
 
-# from sqlite3 import IntegrityError
 from math import ceil
-from operator import itemgetter
 from urllib.parse import unquote
 from venv import logger
 from flask_cors import CORS

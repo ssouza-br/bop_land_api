@@ -1,72 +1,11 @@
-[2024-04-09 16:28:21,695] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:28:21] "[35m[1mGET /bop/?page=1&per_page=3 HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:28:30,162] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:30:45,242] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:30:54,991] ERROR log_exception() L828  Exception on /bop/ [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/view_decorators.py", line 170, in decorator
-    return current_app.ensure_sync(fn)(*args, **kwargs)
-  File "/home/slsn/repos/bop_land_api/blueprints/bop.py", line 99, in get_bop
-    offset = (page - 1) * per_page
-NameError: name 'page' is not defined
-[2024-04-09 16:30:54,992] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:30:54] "[35m[1mGET /bop/?page=1&per_page=3 HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:31:50,077] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:31:53,694] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:31:53] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:32:20,724] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:32:26,700] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:32:26] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:32:44,207] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:32:44] "GET /bop/?page=1&per_page=2 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:32:58,468] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:32:58] "GET /bop/?page=2&per_page=2 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:33:22,646] WARNING get_bop() L92   Erro ao buscar BOP 'a', BOP não encontrado na base :/ - call_trace=/home/slsn/repos/bop_land_api/blueprints/bop.py L92  
-[2024-04-09 16:33:22,646] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:33:22] "[33mGET /bop/?sonda=a&page=2&per_page=2 HTTP/1.1[0m" 404 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:33:31,587] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:33:31] "GET /bop/?sonda=NSXX&page=2&per_page=2 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:34:25,792] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:34:51,431] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:36:05,206] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:36:05,206] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:36:05,207] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:38:09,128] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:38:09,221] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:38:22,332] ERROR log_exception() L828  Exception on /bop/ [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
-Traceback (most recent call last):
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_cors/extension.py", line 176, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_openapi3/scaffold.py", line 117, in view_func
-    response = func(**func_kwargs)
-  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask_jwt_extended/view_decorators.py", line 170, in decorator
-    return current_app.ensure_sync(fn)(*args, **kwargs)
-  File "/home/slsn/repos/bop_land_api/blueprints/bop.py", line 102, in get_bop
-    total_pages = bops.pages
-AttributeError: 'list' object has no attribute 'pages'
-[2024-04-09 16:38:22,333] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 16:38:22] "[35m[1mGET /bop/?page=2&per_page=2 HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:38:55,827] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:38:55,927] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:45:15,894] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:45:15,996] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:47:56,182] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:48:13,780] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:48:53,471] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:49:27,157] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:50:24,929] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 16:51:31,743] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:31:58,771] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:31:58] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:31:59,021] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:31:59] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:32:15,337] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:32:15] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:32:15,653] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:32:15] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:55:23,425] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:23] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:55:23,695] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:23] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:55:53,578] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:53] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:55:53,902] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:53] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:55:59,134] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:59] "OPTIONS /bop/?sonda=A&page=2&per_page=4 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:55:59,456] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:59] "GET /bop/?sonda=A&page=2&per_page=4 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-09 18:58:35,377] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  

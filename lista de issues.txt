@@ -1,1 +1,0 @@
-separar da função getBOPList o fetch para pegar os dados da visualização 
