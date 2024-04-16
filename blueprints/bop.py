@@ -11,7 +11,7 @@ from model import Session
 from model.bop import BOP
 from model.preventor import Preventor
 from model.valvula import Valvula
-from schemas.bop import BOPBuscaSchema, BOPDelSchema, BOPViewSchema, ListagemBOPsSchema, apresenta_bops
+from schemas.bop import BOPBuscaSchema, BOPDelSchema, BOPViewSchema, ListagemBOPsSchema, ListagemSondasSchema, apresenta_bops
 from schemas.error import ErrorSchema
 
 bop_tag = Tag(name="BOP", description="Adição, visualização e remoção de BOPs à base")
@@ -180,6 +180,23 @@ def del_bop(query: BOPBuscaSchema):
         error_msg = "BOP não encontrado na base :/"
         logger.warning(f"Erro ao deletar BOP #'{bop_sonda}', {error_msg}")
         return {"mensagem": error_msg}, 404
+
+@bp.get('/sondas', responses={"200": ListagemSondasSchema})
+@jwt_required()
+def get_sondas():
+    """
+    Retorna todas as sondas com BOPs salvos no sistema
+    """
+    # criando conexão com a base
+    session = Session()
+
+    # fazendo a busca
+    sondas = session.query(BOP.sonda).all()
+            
+    # retorna a representação de bop
+    return {
+    "items": [sonda[0] for sonda in sondas]
+}, 200
 
 def del_valvulas(bop_id):
     session = Session()

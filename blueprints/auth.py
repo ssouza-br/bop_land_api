@@ -64,7 +64,7 @@ def login(form: UsuarioLoginSchema):
         
         if usuario and usuario.checa_senha(senha):
             # cria e guarda os dados do usuário em variável de sessão para uso posterior
-            access_token = create_access_token(identity=email, expires_delta=datetime.timedelta(minutes=5))
+            access_token = create_access_token(identity=email, expires_delta=datetime.timedelta(minutes=60))
             # return apresenta_usuario(usuario), 200
             return jsonify(access_token=access_token)
         else:

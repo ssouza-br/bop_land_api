@@ -1,11 +1,46 @@
-[2024-04-09 18:31:58,771] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:31:58] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:31:59,021] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:31:59] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:32:15,337] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:32:15] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:32:15,653] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:32:15] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:55:23,425] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:23] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:55:23,695] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:23] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:55:53,578] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:53] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:55:53,902] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:53] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:55:59,134] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:59] "OPTIONS /bop/?sonda=A&page=2&per_page=4 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:55:59,456] INFO _log() L96   127.0.0.1 - - [09/Apr/2024 18:55:59] "GET /bop/?sonda=A&page=2&per_page=4 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-09 18:58:35,377] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:05:22,653] ERROR log_exception() L828  Exception on /bop/sondas [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 873, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 892, in finalize_request
+    response = self.make_response(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1183, in make_response
+    rv = self.json.response(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 214, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.10/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.10/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Row is not JSON serializable
+[2024-04-16 09:05:22,654] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:05:22] "[35m[1mGET /bop/sondas HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:07:08,301] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:07:46,982] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:08:02,131] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:08:02] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:08:02,148] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:08:02] "[36mGET /openapi/static/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:08:02,394] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:08:02] "[36mGET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:08:02,459] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:08:02] "[36mGET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:08:02,821] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:08:02] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:08:02,833] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:08:02] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:08:07,885] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:08:07] "GET /bop/sondas HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:09:35,923] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:09:49,522] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/bop.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:16:32,558] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/valvulas.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:16:42,299] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/valvulas.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:17:06,937] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/valvulas.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:17:13,658] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:17:13] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:17:13,685] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:17:13] "[36mGET /openapi/static/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:17:13,921] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:17:13] "[36mGET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:17:13,999] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:17:13] "[36mGET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:17:14,346] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:17:14] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:17:14,370] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:17:14] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:17:30,556] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/app.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:18:54,403] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/app.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  

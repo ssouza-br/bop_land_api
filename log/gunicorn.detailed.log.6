@@ -1,46 +1,88 @@
-[2024-04-14 18:06:58,445] INFO _log() L96   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://172.24.235.173:5000 - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:06:58,445] INFO _log() L96   [33mPress CTRL+C to quit[0m - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:06:58,446] INFO _log() L96    * Restarting with stat - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:19,884] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:19] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:20,393] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:20] "OPTIONS /auth/quemeusou HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:20,709] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:20] "GET /auth/quemeusou HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:24,835] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:24] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:25,154] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:25] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:28,502] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:28] "OPTIONS /bop/?page=2&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:28,815] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:28] "GET /bop/?page=2&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:30,662] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:30] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:30,973] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:30] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:33,841] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:33] "OPTIONS /auth/quemeusou HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:34,154] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:34] "GET /auth/quemeusou HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:39,243] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:39] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:07:39,561] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:07:39] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:05,594] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:05] "POST /auth/register HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:22,842] WARNING login() L73   Erro ao buscar o usuário 'ser@sergio.com', Senha ou email não encontrado no sistema :/ - call_trace=/home/slsn/repos/bop_land_api/blueprints/auth.py L73  
-[2024-04-14 18:08:22,842] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:22] "[31m[1mPOST /auth/login HTTP/1.1[0m" 400 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:30,976] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:30] "POST /auth/login HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:31,802] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:31] "OPTIONS /auth/quemeusou HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:32,056] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:32] "GET /auth/quemeusou HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:35,093] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:35] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:35,412] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:35] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:36,699] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:36] "OPTIONS /auth/quemeusou HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:37,017] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:37] "GET /auth/quemeusou HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:38,207] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:38] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:08:38,525] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:08:38] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:49:15,098] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:49:15] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:49:15,382] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:49:15] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:52:47,782] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:52:47] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:52:48,053] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:52:48] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:52:50,154] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:52:50] "OPTIONS /bop/?page=2&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:52:50,470] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:52:50] "GET /bop/?page=2&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:52:51,975] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:52:51] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:52:52,299] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:52:52] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:53:26,715] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:53:26] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:53:27,032] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:53:27] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:53:49,417] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:53:49] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:53:49,726] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:53:49] "GET /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:55:01,064] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:55:01] "OPTIONS /bop/?page=2&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:55:01,315] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:55:01] "GET /bop/?page=2&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
-[2024-04-14 18:55:04,405] INFO _log() L96   127.0.0.1 - - [14/Apr/2024 18:55:04] "OPTIONS /bop/?page=1&per_page=3 HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:51:16,345] ERROR log_exception() L828  Exception on /valvula/sonda [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 873, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 892, in finalize_request
+    response = self.make_response(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1183, in make_response
+    rv = self.json.response(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 214, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.10/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.10/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Valvula is not JSON serializable
+[2024-04-16 09:51:16,347] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:51:16] "[35m[1mGET /valvula/sonda?sonda=NSXX HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:52:00,754] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/valvula.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:52:03,533] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:52:03] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:52:03,558] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:52:03] "[36mGET /openapi/static/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:52:03,805] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:52:03] "[36mGET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:52:03,867] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:52:03] "[36mGET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:52:04,246] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:52:04] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:52:04,275] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:52:04] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:52:12,880] ERROR log_exception() L828  Exception on /valvula/sonda [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 873, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 892, in finalize_request
+    response = self.make_response(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1183, in make_response
+    rv = self.json.response(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 214, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.10/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.10/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Valvula is not JSON serializable
+[2024-04-16 09:52:12,881] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:52:12] "[35m[1mGET /valvula/sonda?sonda=NSXX HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:53:25,673] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/valvula.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:53:34,759] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:53:34] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:53:34,778] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:53:34] "[36mGET /openapi/static/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:53:35,022] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:53:35] "[36mGET /openapi/static/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:53:35,084] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:53:35] "[36mGET /openapi/static/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:53:35,430] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:53:35] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:53:35,431] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:53:35] "[36mGET /openapi/static/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:53:43,978] ERROR log_exception() L828  Exception on /valvula/sonda [GET] - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py L828 
+Traceback (most recent call last):
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 873, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 892, in finalize_request
+    response = self.make_response(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/app.py", line 1183, in make_response
+    rv = self.json.response(rv)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 214, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.10/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.10/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Valvula is not JSON serializable
+[2024-04-16 09:53:43,979] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:53:43] "[35m[1mGET /valvula/sonda?sonda=NSXX HTTP/1.1[0m" 500 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:54:13,487] INFO _log() L96    * Detected change in '/home/slsn/repos/bop_land_api/blueprints/valvula.py', reloading - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  
+[2024-04-16 09:54:21,070] INFO _log() L96   127.0.0.1 - - [16/Apr/2024 09:54:21] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/slsn/repos/bop_land_api/.venv/lib/python3.10/site-packages/werkzeug/_internal.py L96  

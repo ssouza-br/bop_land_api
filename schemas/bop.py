@@ -20,6 +20,11 @@ class ListagemBOPsSchema(BaseModel):
     """ Define como uma listagem de BOPs será retornada.
     """
     content:List[BOPSchema]
+    
+class ListagemSondasSchema(BaseModel):
+    """ Define como uma listagem de BOPs será retornada.
+    """
+    content:List[str]
 
 
 def apresenta_bops(bops: List[BOP]):
