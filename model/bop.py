@@ -12,12 +12,13 @@ class BOP(Base):
     id = Column("pk_bop", Integer, primary_key=True)
     sonda = Column(String(140), unique=True)
 
-    # Definição do relacionamento entre o produto e o comentário.
-    # Essa relação é implicita, não está salva na tabela 'produto',
+    # Definição do relacionamento entre o BOP, as válvulas e os preventores.
+    # Essa relação é implicita, não está salva na tabela 'bop',
     # mas aqui estou deixando para SQLAlchemy a responsabilidade
     # de reconstruir esse relacionamento.
     valvulas = relationship("Valvula", back_populates="bop")
     preventores = relationship("Preventor", back_populates="bop")
+    testes = relationship("Teste", back_populates="bop")
 
     def __init__(self, sonda:str):
         """
@@ -34,7 +35,7 @@ class BOP(Base):
         self.valvulas.append(valvula)
         
     def adiciona_preventor(self, preventor:Preventor):
-        """ Adiciona uma nova válvula ao BOP
+        """ Adiciona um novo preventor ao BOP
         """
         self.preventores.append(preventor)
 

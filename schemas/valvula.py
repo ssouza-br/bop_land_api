@@ -4,19 +4,19 @@ from pydantic import BaseModel
 from model.valvula import Valvula
 
 class ValvulaSchema(BaseModel):
-    """ Define como um novo comentário a ser inserido deve ser representado
+    """ Define como uma nova válvula a ser inserido deve ser representada
     """
-    valvula_id: int = "Inclua o id da válvulao BOP no qual a valvula deve ser inserida"
+    id: int = "Inclua o id da válvula"
     acronimo: str = "Insira o nome do acronimo que defina corretamente a válvula"
     
 class ValvulaBuscaSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca. Que será
-        feita apenas com base no nome da sonda dona do BOP.
+        feita apenas com base no bop_id.
     """
-    sonda: str  
+    bop_id: int
     
 class ListagemValvulasSchema(BaseModel):
-    """ Define como uma listagem de BOPs será retornada.
+    """ Define como uma listagem de válvulas será retornada.
     """
     content:List[ValvulaSchema]
   
@@ -27,7 +27,7 @@ def apresenta_valvulas_objetos(valvulas: List[Valvula]):
     result = []
     for valvula in valvulas:
         result.append({
-            "valvula_id": valvula.id,
+            "id": valvula.id,
             "acronimo": valvula.acronimo
         })
 

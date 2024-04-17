@@ -10,12 +10,14 @@ class Preventor(Base):
     id = Column(Integer, primary_key=True)
     acronimo = Column(String(4000))
 
-    # Definição do relacionamento entre o comentário e um produto.
-    # Aqui está sendo definido a coluna 'produto' que vai guardar
-    # a referencia ao produto, a chave estrangeira que relaciona
-    # um produto ao comentário.
+    # Definição do relacionamento entre o BOP e o preventor
+    # Aqui está sendo definido a coluna 'bop_id' que vai guardar
+    # a referencia ao BOP, a chave estrangeira que relaciona
+    # um BOP ao preventor.
     bop_id = Column(Integer, ForeignKey("bop.pk_bop"), nullable=False)
+    teste_id = Column(Integer, ForeignKey("teste.pk_teste"))
     bop = relationship("BOP", back_populates="preventores")
+    teste = relationship("Teste", back_populates="preventores_testados")
         
     def __init__(self, acronimo:str):
         """

@@ -9,14 +9,16 @@ from model.bop import BOP
 from model.usuario import Usuario
 from model.valvula import Valvula
 from model.preventor import Preventor
+from model.teste import Teste
 
 
 def load_initial_data(session):
     # cria um usuário
     usuario = Usuario(nome='admin', email='admin@admin.com', senha='12345')
+
     # cria uma instancia de BOP    
     bop = BOP('NSXX')
-     
+            
     # adiciona instancias de válvulas ao BOP   
     valvulas = ['LICHOKE', 'LOCHOKE', 'MICHOKE','MOCHOKE', 'UICHOKE', 'UOCHOKE', 'LIKILL', 'LOKILL', 'MIKILL', 'MOKILL', 'UIKILL', 'UOKILL', 'IGUANNULAR', 'IGLANNULAR', 'OGUANNULAR', 'OGLANNULAR']
     [bop.adiciona_valvula(Valvula(acronimo=v)) for v in valvulas]
@@ -25,8 +27,9 @@ def load_initial_data(session):
     preventores = ['TPIPERAM','LPIPERAM','MPIPERAM','UPIPERAM','LBSR','UBSR','LANNULAR','UANNULAR']
     [bop.adiciona_preventor(Preventor(acronimo=p)) for p in preventores]
     
+    # cria outra instancia de BOP    
     bop2 = BOP('NSYY')
-     
+      
     # adiciona instancias de válvulas ao BOP   
     valvulas = ['LICHOKE', 'LOCHOKE', 'MICHOKE','MOCHOKE', 'UICHOKE', 'UOCHOKE', 'LIKILL', 'LOKILL', 'UIKILL', 'UOKILL', 'IGUANNULAR', 'IGLANNULAR', 'OGUANNULAR', 'OGLANNULAR']
     [bop2.adiciona_valvula(Valvula(acronimo=v)) for v in valvulas]
@@ -36,8 +39,7 @@ def load_initial_data(session):
     [bop2.adiciona_preventor(Preventor(acronimo=p)) for p in preventores]
     
     session.add_all([bop, bop2, usuario])
-    session.commit()
-    
+    session.commit()    
 
 db_path = "database/"
 # Verifica se o diretorio não existe

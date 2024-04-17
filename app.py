@@ -12,6 +12,7 @@ from blueprints import auth
 from blueprints import bop
 from blueprints import valvula
 from blueprints import preventor
+from blueprints import teste
 
 # JWT Bearer Sample
 jwt = {
@@ -48,6 +49,9 @@ app.register_api(valvula.bp)
 
 # registrando a blueprint de preventor
 app.register_api(preventor.bp)
+
+# registrando a blueprint de teste
+app.register_api(teste.bp)
 
 # definindo tags
 home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")

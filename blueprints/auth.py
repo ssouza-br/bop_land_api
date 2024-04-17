@@ -1,7 +1,6 @@
 
 import datetime
 from sqlalchemy import exc
-from venv import logger
 from flask import jsonify
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask_openapi3 import APIBlueprint, Tag
@@ -34,24 +33,21 @@ def cadastro_usuario(form: UsuarioSchema):
         try:
             # criando conexão com a base
             session = Session()
-            # adicionando bop
+            # adicionando novo usuário
             session.add(novo_usuario)
             # efetivando o camando de adição de novo item na tabela
             session.commit()
-            logger.debug(f"Adicionado usuário: '{novo_usuario.email}'")
             return apresenta_usuario(novo_usuario), 200
 
         except exc.IntegrityError:
             session.rollback()
             # como a duplicidade do nome é a provável razão do IntegrityError
             error_msg = "Usuário já cadastrado com esse email :/"
-            logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
             return {"mensagem": error_msg}, 409
 
         except Exception:
             # caso um erro fora do previsto
             error_msg = "Não foi possível salvar novo usuário :/"
-            logger.warning(f"Erro ao adicionar usuário '{novo_usuario.email}', {error_msg}")
             return {"mensagem": error_msg}, 400
 
 @bp.post('/login', responses={"200": UsuarioViewSchema})
@@ -63,14 +59,13 @@ def login(form: UsuarioLoginSchema):
         usuario = session.query(Usuario).filter_by(email=email).first()
         
         if usuario and usuario.checa_senha(senha):
-            # cria e guarda os dados do usuário em variável de sessão para uso posterior
-            access_token = create_access_token(identity=email, expires_delta=datetime.timedelta(minutes=60))
-            # return apresenta_usuario(usuario), 200
+            # cria um token de acesso
+            access_token = create_access_token(identity=email, expires_delta=datetime.timedelta(minutes=600))
+            # retorna o token de acesso
             return jsonify(access_token=access_token)
         else:
             # caso um erro fora do previsto
             error_msg = "Senha ou email não encontrado no sistema :/"
-            logger.warning(f"Erro ao buscar o usuário '{email}', {error_msg}")
             return {"mensagem": error_msg}, 400
 
 @bp.get('/quemeusou',responses={"200": UsuarioViewSchema})

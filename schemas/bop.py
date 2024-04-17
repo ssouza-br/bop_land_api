@@ -12,8 +12,8 @@ class BOPBuscaSchema(BaseModel):
         feita apenas com base no nome da sonda dona do BOP.
     """
     sonda: Optional[str] = None
-    page: int = 1
-    per_page: int = 4
+    pagina: int = 1
+    por_pagina: int = 4
 
 
 class ListagemBOPsSchema(BaseModel):
@@ -22,7 +22,7 @@ class ListagemBOPsSchema(BaseModel):
     content:List[BOPSchema]
     
 class ListagemSondasSchema(BaseModel):
-    """ Define como uma listagem de BOPs será retornada.
+    """ Define como uma listagem de sondas será retornada.
     """
     content:List[str]
 

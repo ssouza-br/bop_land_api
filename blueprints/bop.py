@@ -1,7 +1,5 @@
-
 from math import ceil
 from urllib.parse import unquote
-from venv import logger
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required
 from flask_openapi3 import APIBlueprint, Tag
@@ -36,11 +34,9 @@ def add_bop(form: BOPViewSchema):
     sonda = form.sonda
     valvulas = form.valvulas
     preventores = form.preventores
-    session = Session()
-    print(form)
+
     # criando um BOP
     bop = BOP(sonda=sonda)
-    logger.debug(f"Adicionando BOP da sonda: '{bop.sonda}'")
     
     # adicionando as válvulas ao BOP criado acima
     [bop.adiciona_valvula(Valvula(v)) for v in valvulas]
@@ -49,24 +45,22 @@ def add_bop(form: BOPViewSchema):
     [bop.adiciona_preventor(Preventor(p)) for p in preventores]
     try:
         # criando conexão com a base
+        session = Session()
         # adicionando bop
         session.add(bop)
-        session.commit()
         # efetivando o camando de adição de novo item na tabela
-        logger.debug(f"Adicionado BOP da sonda: '{bop.sonda}' com válvulas e preventores")
+        session.commit()
         return apresenta_bops([bop]), 200
 
     except exc.IntegrityError:
         session.rollback()
         # como a duplicidade do nome é a provável razão do IntegrityError
         error_msg = "BOP dessa sonda já salvo na base :/"
-        logger.warning(f"Erro ao adicionar produto '{bop.sonda}', {error_msg}")
         return {"mensagem": error_msg}, 409
 
     except Exception:
         # caso um erro fora do previsto
         error_msg = "Não foi possível salvar novo BOP :/"
-        logger.warning(f"Erro ao adicionar BOP '{bop.sonda}', {error_msg}")
         return {"mensagem": error_msg}, 400
 
 @bp.get('/', responses={"200": ListagemBOPsSchema})
@@ -79,71 +73,71 @@ def get_bop(query: BOPBuscaSchema):
     # criando conexão com a base
     session = Session()
 
-    sonda, page, per_page = query.sonda, query.page, query.per_page
+    sonda, pagina, por_pagina = query.sonda, query.pagina, query.por_pagina
     if sonda:
         bop_sonda = sonda
-        logger.debug(f"Coletando dados sobre BOP #{bop_sonda}")
         # fazendo a busca
         bop = session.query(BOP).filter(BOP.sonda.like(f'%{bop_sonda}%')).all()
         if not bop:
             # se o bop não foi encontrado
             error_msg = "BOP não encontrado na base :/"
-            logger.warning(f"Erro ao buscar BOP '{bop_sonda}', {error_msg}")
             return {"mensagem": error_msg}, 404
         else:
-            total_records = session.query(BOP).filter(BOP.sonda.like(f'%{bop_sonda}%')).count()
+            # calcula o total de registros
+            total_registros = session.query(BOP).filter(BOP.sonda.like(f'%{bop_sonda}%')).count()
 
-            # Calculate total pages
-            total_pages = ceil(total_records / per_page)
+            # Calcula o total de páginas
+            total_paginas = ceil(total_registros / por_pagina)
 
-            # Calculate whether there are more pages
-            has_next = page < total_pages
+            # Calcula se tem próxima página
+            tem_proximo = pagina < total_paginas
 
-            # Calculate whether there are previous pages
-            has_prev = page > 1
+            # Calcula se tem página anterior
+            tem_anterior = pagina > 1
             
-            # Calculate current page
-            current_page = page
+            # Calcula a página atual
+            pagina_atual = pagina
         
-            logger.debug(f"BOP encontrado: '{bop_sonda}'")
-            # retorna a representação de bop
+            # retorna a representação de bop paginada
             return {
-            "total_pages": total_pages,
-            "total_records": total_records,
-            "current_page": current_page,
-            "has_next": has_next,
-            "has_prev": has_prev,
+            "total_paginas": total_paginas,
+            "total_registros": total_registros,
+            "pagina_atual": pagina_atual,
+            "tem_proximo": tem_proximo,
+            "tem_anterior": tem_anterior,
             "items": apresenta_bops(bop)
         }, 200
     else:
         # trazendo os resultados paginados e em ordem alfabética por nome da sonda
-        offset = (page - 1) * per_page
-        bops = session.query(BOP).order_by(BOP.sonda).offset(offset).limit(per_page).all()
-        # Count total number of records
-        total_records = session.query(BOP).count()
-
-        # Calculate total pages
-        total_pages = ceil(total_records / per_page)
-
-        # Calculate whether there are more pages
-        has_next = page < total_pages
-
-        # Calculate whether there are previous pages
-        has_prev = page > 1
-
-        # Perform pagination manually
-        offset = (page - 1) * per_page
-        bops = session.query(BOP).order_by(BOP.sonda).offset(offset).limit(per_page).all()
-
-        # Calculate current page
-        current_page = page
+        offset = (pagina - 1) * por_pagina
+        bops = session.query(BOP).order_by(BOP.sonda).offset(offset).limit(por_pagina).all()
         
+        # calcula o total de registros
+        total_registros = session.query(BOP).count()
+
+        # Calcula o total de páginas
+        total_paginas = ceil(total_registros / por_pagina)
+
+        # Calcula se tem próxima página
+        tem_proximo = pagina < total_paginas
+
+        # Calcula se tem página anterior
+        tem_anterior = pagina > 1
+        
+        # Calcula a página atual
+        pagina_atual = pagina
+
+        # Realiza a paginaçaõ de forma manual
+        offset = (pagina - 1) * por_pagina
+        bops = session.query(BOP).order_by(BOP.sonda).offset(offset).limit(por_pagina).all()
+        
+        # retorna a representação de bop paginada
         return {
-            "total_pages": total_pages,
-            "total_records": total_records,
-            "current_page": current_page,
-            "has_next": has_next,
-            "has_prev": has_prev,
+            "total_paginas": total_paginas,
+            "total_registros": total_registros,
+            "pagina_atual": pagina_atual,
+            "tem_proximo": tem_proximo,
+            "tem_anterior": tem_anterior,
             "items": apresenta_bops(bops)
         }, 200
 
@@ -155,7 +149,7 @@ def del_bop(query: BOPBuscaSchema):
     Retorna uma mensagem de confirmação da remoção.
     """
     bop_sonda = unquote(unquote(query.sonda))
-    logger.debug(f"Coletando dados sobre BOP #{bop_sonda}")
+
     # criando conexão com a base
     session = Session()
     
@@ -173,12 +167,10 @@ def del_bop(query: BOPBuscaSchema):
 
     if bop:
         # retorna a representação da mensagem de confirmação
-        logger.debug(f"Deletado BOP #{bop_sonda}")
         return {"mensagem": "BOP removido", "sonda": bop_sonda}
     else:
         # se o produto não foi encontrado
         error_msg = "BOP não encontrado na base :/"
-        logger.warning(f"Erro ao deletar BOP #'{bop_sonda}', {error_msg}")
         return {"mensagem": error_msg}, 404
 
 @bp.get('/sondas', responses={"200": ListagemSondasSchema})
@@ -191,11 +183,11 @@ def get_sondas():
     session = Session()
 
     # fazendo a busca
-    sondas = session.query(BOP.sonda).all()
+    bops = session.query(BOP).all()
             
-    # retorna a representação de bop
+    # retorna a representação de todas as sondas com BOP
     return {
-    "items": [sonda[0] for sonda in sondas]
+    "items": [{"id": bop.id ,"sonda": bop.sonda} for bop in bops]
 }, 200
 
 def del_valvulas(bop_id):
@@ -211,9 +203,9 @@ def del_valvulas(bop_id):
 def del_preventores(bop_id):
     session = Session()
     
-    # encontrando as válvulas associadas ao BOP em questão
+    # encontrando os preventores associadas ao BOP em questão
     preventores = session.query(Preventor).filter(Preventor.bop_id == bop_id).all()
     
-    #deletando válvula por válvula associada a esse BOP
+    #deletando preventor por preventor associada a esse BOP
     [session.query(Preventor).filter(Preventor.id == p.id).delete() for p in preventores]
     session.commit()
