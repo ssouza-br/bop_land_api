@@ -1,5 +1,5 @@
 from math import ceil
-from urllib.parse import unquote
+from flask import jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required
 from flask_openapi3 import APIBlueprint, Tag
@@ -9,7 +9,7 @@ from model import Session
 from model.bop import BOP
 from model.preventor import Preventor
 from model.valvula import Valvula
-from schemas.bop import BOPBuscaSchema, BOPDelSchema, BOPViewSchema, ListagemBOPsSchema, ListagemSondasSchema, apresenta_bops
+from schemas.bop import BOPBuscaSchema, BOPDelSchema, BOPDelSchemaById, BOPViewSchema, ListagemBOPsSchema, ListagemSondasSchema, apresenta_bops
 from schemas.error import ErrorSchema
 
 bop_tag = Tag(name="BOP", description="Adição, visualização e remoção de BOPs à base")
@@ -26,14 +26,18 @@ CORS(bp, supports_credentials=True)
 
 @bp.post('/', responses={"200": BOPViewSchema})
 @jwt_required()
-def add_bop(form: BOPViewSchema):
+def add_bop():
     """Adiciona um novo BOP a base de dados
 
     Retorna uma representação dos BOPs com válvulas e preventores associados.
     """
-    sonda = form.sonda
-    valvulas = form.valvulas
-    preventores = form.preventores
+    data = request.get_json() 
+    if not data:
+        return jsonify({"mensagem": "No JSON data provided"}), 400
+    
+    sonda = data.get('sonda')
+    valvulas = data.get('valvulas')
+    preventores = data.get('preventores')
 
     # criando um BOP
     bop = BOP(sonda=sonda)
@@ -143,31 +147,28 @@ def get_bop(query: BOPBuscaSchema):
 
 @bp.delete('/', responses={"200": BOPDelSchema})
 @jwt_required()
-def del_bop(query: BOPBuscaSchema):
+def del_bop(query: BOPDelSchemaById):
     """Deleta um BOP a partir do nome da sonda dona desse equipamento
 
     Retorna uma mensagem de confirmação da remoção.
     """
-    bop_sonda = unquote(unquote(query.sonda))
+    bop_id = query.id
 
     # criando conexão com a base
     session = Session()
-    
-    # encontrando o bop a ser deletado
-    bop_id = session.query(BOP).filter(BOP.sonda == bop_sonda).first().id
-    
+        
     # deletando as válvulas associadas ao BOP em questão
     del_valvulas(bop_id)
     # deletando os preventores associados ao BOP em questão
     del_preventores(bop_id)
     
     # deletando o bop
-    bop = session.query(BOP).filter(BOP.sonda == bop_sonda).delete()
+    bop = session.query(BOP).filter(BOP.id == bop_id).delete()
     session.commit()
 
     if bop:
         # retorna a representação da mensagem de confirmação
-        return {"mensagem": "BOP removido", "sonda": bop_sonda}
+        return {"mensagem": "BOP removido", "id": bop_id}
     else:
         # se o produto não foi encontrado
         error_msg = "BOP não encontrado na base :/"

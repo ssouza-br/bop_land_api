@@ -15,7 +15,6 @@ class BOPBuscaSchema(BaseModel):
     pagina: int = 1
     por_pagina: int = 4
 
-
 class ListagemBOPsSchema(BaseModel):
     """ Define como uma listagem de BOPs será retornada.
     """
@@ -34,6 +33,7 @@ def apresenta_bops(bops: List[BOP]):
     result = []
     for bop in bops:
         result.append({
+            "id": bop.id,
             "sonda": bop.sonda,
             "valvulas": [v.acronimo for v in bop.valvulas],
             "preventores": [p.acronimo for p in bop.preventores],
@@ -49,6 +49,11 @@ class BOPViewSchema(BaseModel):
     valvulas: List[str]    
     preventores: List[str]
 
+class BOPDelSchemaById(BaseModel):
+    """ Define como deve ser a estrutura do dado retornado após uma requisição
+        de remoção.
+    """
+    id: int
 
 class BOPDelSchema(BaseModel):
     """ Define como deve ser a estrutura do dado retornado após uma requisição
