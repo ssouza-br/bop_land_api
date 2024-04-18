@@ -1,14 +1,14 @@
 
 import datetime
 from sqlalchemy import exc
-from flask import jsonify
+from flask import jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask_openapi3 import APIBlueprint, Tag
 
 from model import Session
 from model.usuario import Usuario
 from schemas.error import ErrorSchema
-from schemas.usuario import UsuarioLoginSchema, UsuarioSchema, UsuarioViewSchema, apresenta_usuario
+from schemas.usuario import UsuarioLoginSchema, UsuarioViewSchema, apresenta_usuario
 
 usuario_tag = Tag(name="Usuario", description="Adição, visualização e remoção de usuários à base")
 security = [{"jwt": []}]
@@ -23,32 +23,40 @@ bp = APIBlueprint(
     doc_ui=True )
 
 @bp.post('/register', responses={"200": UsuarioViewSchema})
-def cadastro_usuario(form: UsuarioSchema):
-        nome = form.nome
-        email = form.email
-        senha = form.senha
+def cadastro_usuario():
+    """Adiciona um novo usuário a base de dados
 
-        novo_usuario = Usuario(nome=nome,email=email,senha=senha)
-        
-        try:
-            # criando conexão com a base
-            session = Session()
-            # adicionando novo usuário
-            session.add(novo_usuario)
-            # efetivando o camando de adição de novo item na tabela
-            session.commit()
-            return apresenta_usuario(novo_usuario), 200
+    Retorna uma representação do usuário omitindo a senha.
+    """    
+    data = request.get_json() 
+    if not data:
+        return jsonify({"mensagem": "No JSON data provided"}), 400
+    
+    nome = data.get('nome')
+    email = data.get('email')
+    senha = data.get('senha')
 
-        except exc.IntegrityError:
-            session.rollback()
-            # como a duplicidade do nome é a provável razão do IntegrityError
-            error_msg = "Usuário já cadastrado com esse email :/"
-            return {"mensagem": error_msg}, 409
+    novo_usuario = Usuario(nome=nome,email=email,senha=senha)
+    
+    try:
+        # criando conexão com a base
+        session = Session()
+        # adicionando novo usuário
+        session.add(novo_usuario)
+        # efetivando o camando de adição de novo item na tabela
+        session.commit()
+        return apresenta_usuario(novo_usuario), 200
 
-        except Exception:
-            # caso um erro fora do previsto
-            error_msg = "Não foi possível salvar novo usuário :/"
-            return {"mensagem": error_msg}, 400
+    except exc.IntegrityError:
+        session.rollback()
+        # como a duplicidade do nome é a provável razão do IntegrityError
+        error_msg = "Usuário já cadastrado com esse email :/"
+        return {"mensagem": error_msg}, 409
+
+    except Exception:
+        # caso um erro fora do previsto
+        error_msg = "Não foi possível salvar novo usuário :/"
+        return {"mensagem": error_msg}, 400
 
 @bp.post('/login', responses={"200": UsuarioViewSchema})
 def login(form: UsuarioLoginSchema):
@@ -71,6 +79,9 @@ def login(form: UsuarioLoginSchema):
 @bp.get('/quemeusou',responses={"200": UsuarioViewSchema})
 @jwt_required()
 def get_dado_secao():
+    """
+    Retorna uma representação do usuário que está logado no sistema.
+    """    
     current_user = get_jwt_identity()
     if current_user:
         session = Session()
