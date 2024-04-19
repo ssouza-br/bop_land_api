@@ -41,7 +41,7 @@ automaticamente após uma mudança no código fonte.
 
 Abra o [http://localhost:5000/#/](http://localhost:5000/#/) no navegador para verificar o status da API em execução.
 
-Para realizar qualquer chamada a API pelo swagger é necessário incluir o token no campo Authorize. Dessa forma, deve-se acessar o endpoint : `/auth/login/` e inseir as seguintes credenciais, coforme imagem abaixo:
+Para realizar qualquer chamada a API pelo swagger é necessário incluir o token no campo Authorize. Dessa forma, deve-se acessar o endpoint : `/auth/login/`, conforme imagem abaixo e utilizando as seguintes credenciais:
 ```
 email: admin@admin.com
 senha: 12345
@@ -49,3 +49,6 @@ senha: 12345
 ![alt text](image-1.png)
 
 O token se encontra na resposta do login como valor da chave access_token, neste caso do print: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMzU0NTI2NywianRpIjoiYmI2MmVkYTctMWFiOS00NzIzLTg2YjMtNjBkYWU5ZTc4YmQwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluQGFkbWluLmNvbSIsIm5iZiI6MTcxMzU0NTI2NywiY3NyZiI6ImZmY2MwMTk5LTU0ZWItNDM1NS1iNTA5LTI2NTlhZmQ1YWE3YyIsImV4cCI6MTcxMzU4MTI2N30.M4JgHKOfcjkOGwjLg-jOXaUomkXOr2mhNv1lxoSfxhA`
+
+Basta colá-lo no authorizations e voilá.
+![alt text](image-2.png)
