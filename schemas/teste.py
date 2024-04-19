@@ -4,14 +4,34 @@ from model.teste import Teste
 from schemas.preventor import PreventorSchema
 from schemas.valvula import ValvulaSchema
 
+class AprovaTesteSchema(BaseModel):
+    """ Define que o id é o parâmetro necessário para aprovação do teste
+    válvulas testadas e preventores testados.
+    """
+    id: int
+    
 class TesteViewSchema(BaseModel):
     """ Define como um Teste será retornado: nome do teste, bop_id,
     válvulas testadas e preventores testados.
     """
-    nome: str
+    id: int
     bop_id: int
+    nome: str
     valvulas_testadas: List[ValvulaSchema]    
     preventores_testados: List[PreventorSchema]
+    
+class ListagemTestesSchema(BaseModel):
+    """ Define como uma listagem de BOPs será retornada.
+    """
+    content:List[TesteViewSchema]
+    
+class TesteBuscaSchema(BaseModel):
+    """ Define como deve ser a estrutura que representa a busca. Que será
+        feita apenas com base no nome da sonda dona do BOP.
+    """
+    sonda: Optional[str] = None
+    pagina: int = 1
+    por_pagina: int = 4
 
 def apresenta_testes(testes: List[Teste]):
     """ Retorna uma representação do Teste
@@ -19,8 +39,9 @@ def apresenta_testes(testes: List[Teste]):
     result = []
     for teste in testes:
         result.append({
-            "nome": teste.nome,
+            "id": teste.id,
             "bop_id": teste.bop_id,
+            "nome": teste.nome,
             "valvulas_testadas": [v.acronimo for v in teste.valvulas_testadas],
             "preventores_testados": [p.acronimo for p in teste.preventores_testados],
         })

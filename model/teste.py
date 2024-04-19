@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, Date, DateTime, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 from model import Base
@@ -9,6 +9,8 @@ class Teste(Base):
 
     id = Column("pk_teste", Integer, primary_key=True)
     nome = Column(String(4000))
+    data_aprovacao = Column(DateTime)
+    aprovador_id = Column(Integer, ForeignKey("usuario.pk_usuario")) 
 
     # Definição do relacionamento entre o teste e o BOP.
     # Aqui está sendo definido a coluna 'bop_id' que vai guardar

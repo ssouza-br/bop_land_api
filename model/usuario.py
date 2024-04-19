@@ -7,7 +7,7 @@ from  model import Base
 class Usuario(Base):
     __tablename__ = 'usuario'
 
-    id = Column(Integer, primary_key=True)
+    id = Column("pk_usuario", Integer, primary_key=True)
     nome = Column(String(100), nullable=False)
     email = Column(String(100), unique=True)
     senha = Column(String(100))
