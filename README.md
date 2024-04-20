@@ -2,7 +2,7 @@
 
 Este pequeno projeto faz parte da entrega do MVP da disciplina: Desenvolvimento Full Stack Básico cursada na Pós-Graduação em Engenharia de Software da PUC-RJ
 
-O projeto é uma aplicação web chamada BOP Land onde um usuário pode logar, criar, salvar e visualizar BOP's de forma simples e interativa. Como contexto de negócio o BOP (Blowout Preventer) é um equipamento de segurança de poço fundamental em intervenções em poços de petróleo. Este é composto por várias válvulas e preventores que podem ser fechadas para vedar, controlar e monitorar poços de petróleo e gás para evitar explosões, a liberação descontrolada de petróleo bruto ou gás natural de um poço.
+O projeto é uma aplicação web chamada BOP Land onde um usuário pode logar, criar e aprovar testes de BOP de forma simples e interativa. Como contexto de negócio o BOP (Blowout Preventer) é um equipamento de segurança de poço fundamental em intervenções em poços de petróleo. Este é composto por várias válvulas e preventores que podem ser fechadas para vedar, controlar e monitorar poços de petróleo. O teste completo desse equipamento é fundamental para garantia de seu funcionamento e vedação.
 
 ---
 ## Como executar 

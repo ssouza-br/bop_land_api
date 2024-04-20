@@ -42,7 +42,7 @@ def get_preventores():
 @bp.get('/', responses={"200": ListagemPreventoresSchema})
 @jwt_required()
 def get_bop(query: PreventorBuscaSchema):
-    """Faz a busca de todas as válvulas de um BOP através do nome sonda
+    """Faz a busca de todas as válvulas de um BOP através do bop_id
 
     Retorna uma representação das válvulas.
     """

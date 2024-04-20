@@ -1,9 +1,10 @@
 from math import ceil
+from zoneinfo import ZoneInfo
 from flask import jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_openapi3 import APIBlueprint, Tag
-from sqlalchemy import exc
+from sqlalchemy import desc, exc
 
 from model import Session
 from model.bop import BOP
@@ -12,7 +13,7 @@ from model.teste import Teste
 from model.usuario import Usuario
 from model.valvula import Valvula
 from schemas.error import ErrorSchema
-from schemas.teste import AprovaTesteSchema, ListagemTestesSchema, TesteBuscaSchema, TesteViewSchema, apresenta_testes
+from schemas.teste import AprovaTesteSchema, ListagemTestesSchema, StatusEnum, TesteBuscaSchema, TesteViewSchema, apresenta_testes
 from datetime import datetime
 
 teste_tag = Tag(name="Teste", description="Adição e visualização de testes à base")
@@ -87,20 +88,59 @@ def add_teste():
 @bp.get('/', responses={"200": ListagemTestesSchema})
 @jwt_required()
 def get_teste(query: TesteBuscaSchema):
-    """Faz a busca por todos os Testes presentes no sistema
+    """Faz a busca por todos os Testes presentes no sistema, a partir do seu status no sistema: aprovado ou em_andamento
 
     Retorna uma representação dos Testes.
     """
     # criando conexão com a base
     session = Session()
 
-    pagina, por_pagina = query.pagina, query.por_pagina
+    status, pagina, por_pagina = query.status, query.pagina, query.por_pagina
     # Realiza a paginação de forma manual
     offset = (pagina - 1) * por_pagina
-    testes = session.query(Teste).order_by(Teste.bop_id).offset(offset).limit(por_pagina).all()
-
-    # calcula o total de registros
-    total_registros = session.query(Teste).count()
+    
+    # lista os testes a partir do status
+    # aprovado, caso haja data no campo data_aprovacao
+    if(status == StatusEnum.aprovado):
+        # coletando todos os registros de testes aprovados
+        testes = session.query(Teste).order_by(desc(Teste.data_aprovacao)).filter(Teste.data_aprovacao != None).offset(offset).limit(por_pagina).all()
+        # calcula o total de registros
+        total_registros = session.query(Teste).filter(Teste.data_aprovacao != None).count()
+        
+        # pegando o nome do aprovador pelo usuario_id
+        result = []
+        for teste in testes:
+            bop = session.query(BOP).filter(BOP.id == teste.bop_id).first()
+            aprovador = session.query(Usuario).filter(Usuario.id == teste.aprovador_id).first() if teste.aprovador_id else None
+            
+            teste_data = {
+                'id': teste.id,
+                'nome': teste.nome,
+                'sonda': bop.sonda,
+                'aprovador': aprovador.nome,
+                'data_aprovacao': teste.data_aprovacao,
+                'valvulas_testadas': [v.acronimo for v in teste.valvulas_testadas],
+                'preventores_testados': [p.acronimo for p in teste.preventores_testados]
+            }
+            result.append(teste_data)
+    # em_andamento caso contrário 
+    elif(status == StatusEnum.em_andamento):
+        testes = session.query(Teste).order_by(desc(Teste.data_aprovacao)).filter(Teste.data_aprovacao == None).offset(offset).limit(por_pagina).all()
+        # calcula o total de registros
+        total_registros = session.query(Teste).filter(Teste.data_aprovacao == None).count()
+        
+        result = []
+        for teste in testes:
+            bop = session.query(BOP).filter(BOP.id == teste.bop_id).first()
+               
+            teste_data = {
+                'id': teste.id,
+                'nome': teste.nome,
+                'sonda': bop.sonda,
+                'valvulas_testadas': [v.acronimo for v in teste.valvulas_testadas],
+                'preventores_testados': [p.acronimo for p in teste.preventores_testados]
+            }
+            result.append(teste_data)
 
     # Calcula o total de páginas
     total_paginas = ceil(total_registros / por_pagina)
@@ -121,7 +161,7 @@ def get_teste(query: TesteBuscaSchema):
         "pagina_atual": pagina_atual,
         "tem_proximo": tem_proximo,
         "tem_anterior": tem_anterior,
-        "items": apresenta_testes(testes)
+        "items": {"content": result}
     }, 200
     
 
@@ -144,7 +184,7 @@ def aprovar_teste(query: AprovaTesteSchema):
         teste.aprovador_id = aprovador.id
         
         #atribuindo a data da aprovação
-        teste.data_aprovacao = datetime.now()
+        teste.data_aprovacao = datetime.now(ZoneInfo("America/Sao_Paulo"))
         
         session.commit()
     else:

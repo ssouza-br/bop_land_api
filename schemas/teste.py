@@ -1,5 +1,6 @@
+from enum import Enum
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 from model.teste import Teste
 from schemas.preventor import PreventorSchema
 from schemas.valvula import ValvulaSchema
@@ -25,14 +26,18 @@ class ListagemTestesSchema(BaseModel):
     """
     content:List[TesteViewSchema]
     
+class StatusEnum(str, Enum):
+    aprovado = 'aprovado'
+    em_andamento = 'em_andamento'
+    
 class TesteBuscaSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca. Que será
         feita apenas com base no nome da sonda dona do BOP.
     """
-    sonda: Optional[str] = None
+    status: StatusEnum
     pagina: int = 1
     por_pagina: int = 4
-
+    
 def apresenta_testes(testes: List[Teste]):
     """ Retorna uma representação do Teste
     """
@@ -47,4 +52,3 @@ def apresenta_testes(testes: List[Teste]):
         })
 
     return {"content": result}
-
