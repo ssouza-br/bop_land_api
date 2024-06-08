@@ -13,5 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia o código-fonte para o diretório de trabalho
 COPY . .
 
+EXPOSE 5000
+
 # Define o comando de execução da API
 CMD ["flask", "run", "--host", "0.0.0.0", "--port", "5000"]
