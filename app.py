@@ -21,7 +21,14 @@ jwt = {
   "bearerFormat": "JWT"
 }
 
-security_schemes = {"jwt": jwt}
+api_key = {
+    "type": "apiKey",
+    "name": "acess_token",
+    "in": "cookie"
+}
+
+# security_schemes = {"jwt": jwt, "api_key": api_key}
+security_schemes = {"api_key": api_key}
 
 info = Info(title="Minha API", version="1.0.0")
 app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
@@ -31,9 +38,8 @@ load_dotenv()
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 
 # usado somente com cookies
-# app.config['JWT_TOKEN_LOCATION'] = os.getenv('JWT_TOKEN_LOCATION')
-# app.config['JWT_COOKIE_SECURE'] = os.getenv('JWT_COOKIE_SECURE')
-# app.config['JWT_COOKIE_CSRF_PROTECT'] = os.getenv('JWT_COOKIE_CSRF_PROTECT')
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 
 CORS(app, supports_credentials=True)
 jwt = JWTManager(app)
