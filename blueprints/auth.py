@@ -4,8 +4,8 @@ from flask import jsonify, make_response, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, set_access_cookies, unset_jwt_cookies
 from flask_openapi3 import APIBlueprint, Tag
 
-from model import Session
-from model.usuario import Usuario
+from models import Session
+from models.usuario import Usuario
 from schemas.error import ErrorSchema
 from schemas.usuario import UsuarioLoginSchema, UsuarioViewSchema, apresenta_usuario
 

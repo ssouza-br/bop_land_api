@@ -2,9 +2,9 @@ from flask_cors import CORS
 from flask_jwt_extended import jwt_required
 from flask_openapi3 import APIBlueprint, Tag
 
-from model import Session
-from model.bop import BOP
-from model.valvula import Valvula
+from models import Session
+from models.bop import BOP
+from models.valvula import Valvula
 from schemas.error import ErrorSchema
 from schemas.valvula import ListagemValvulasSchema, ValvulaBuscaSchema, apresenta_valvulas, apresenta_valvulas_objetos
 

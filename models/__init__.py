@@ -1,15 +1,15 @@
 from sqlalchemy_utils import create_database
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 import os
 
 # importando os elementos definidos no modelo
-from model.base import Base
-from model.bop import BOP
-from model.usuario import Usuario
-from model.valvula import Valvula
-from model.preventor import Preventor
-from model.teste import Teste
+from models.base import Base
+from models.bop import BOP
+from models.usuario import Usuario
+from models.valvula import Valvula
+from models.preventor import Preventor
+from models.teste import Teste
 
 
 def load_initial_data(session):
@@ -61,8 +61,10 @@ db_url = 'sqlite:///%s/bop_land_db.sqlite3' % db_path
 engine = create_engine(db_url, echo=False)
 
 # Instancia um criador de seção com o banco
-Session = sessionmaker(bind=engine)
-session = Session()
+SessionFactory = sessionmaker(bind=engine)
+Session = scoped_session(SessionFactory)
+
+# session = Session()
 
 if initial_load_needed:
     # cria o banco se ele não existir 
@@ -71,7 +73,7 @@ if initial_load_needed:
     # cria as tabelas do banco, caso não existam
     Base.metadata.create_all(engine)
     
-    # carrega os dados iniciais
-    load_initial_data(session)
+    # # carrega os dados iniciais
+    # load_initial_data(session)
 else:
     print("Banco de dados já criado. Ignorando o carregamento inicial de dados.")

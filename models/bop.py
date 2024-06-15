@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 
-from  model import Base
-from model.preventor import Preventor
-from model.valvula import Valvula
+from  models import Base
+from models.preventor import Preventor
+from models.valvula import Valvula
 
 
 class BOP(Base):
@@ -38,4 +38,17 @@ class BOP(Base):
         """ Adiciona um novo preventor ao BOP
         """
         self.preventores.append(preventor)
+        
+    def equipment_to_string(lista):
+        return [ item.to_string() for item in lista]
+    
+    def dict(self):
+        return {
+            "bop_id": self.id,
+            "sonda": self.sonda,
+            "valvulas": [ valvula.to_string() for valvula in self.valvulas],
+            "preventores": [ preventor.to_string() for preventor in self.preventores],
+            # "testes": self.testes,
+        }
+    
 

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from model.usuario import Usuario
+from models.usuario import Usuario
 
 class UsuarioViewSchema(BaseModel):
     """ Define como um novo usuário a ser inserido deve ser representado

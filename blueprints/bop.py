@@ -1,178 +1,87 @@
 from math import ceil
-from flask import jsonify, request
+from flask import jsonify, request, g
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required
 from flask_openapi3 import APIBlueprint, Tag
-from sqlalchemy import exc
+from pydantic import BaseModel, Field, ValidationError
 
-from model import Session
-from model.bop import BOP
-from model.preventor import Preventor
-from model.valvula import Valvula
-from schemas.bop import BOPBuscaSchema, BOPDelSchema, BOPDelSchemaById, BOPViewSchema, ListagemBOPsSchema, ListagemSondasSchema, apresenta_bops
+from schemas.bop import BOPSchema, ListagemBOPsSchema, BOPBuscaSchema, BOPDelSchema, BOPViewSchema, ListagemSondasSchema
+from exceptions.repository_error import RepositoryError
+from repositories.bop_repository import BOPRepository
+from models import Session
+from models import BOP
 from schemas.error import ErrorSchema
 
 bop_tag = Tag(name="BOP", description="Adição, visualização e remoção de BOPs à base")
-security = [{"jwt": []}]
+security = [{"api_key": []}]
 
-bp = APIBlueprint('bop',
+bp = APIBlueprint('/bop',
                   __name__, 
-                  url_prefix='/bop', 
+                  url_prefix='/api', 
                   abp_tags=[bop_tag], 
                   abp_security=security,
                   abp_responses={"400": ErrorSchema, "409": ErrorSchema}, 
                   doc_ui=True)
 CORS(bp, supports_credentials=True)
 
-@bp.post('/', responses={"200": BOPViewSchema})
+@bp.post('/bop', responses={"200": BOPViewSchema})
 @jwt_required()
-def add_bop():
+def add_bop(body: BOPSchema):
     """Adiciona um novo BOP a base de dados
 
     Retorna uma representação dos BOPs com válvulas e preventores associados.
     """
-    data = request.get_json() 
-    if not data:
-        return jsonify({"mensagem": "No JSON data provided"}), 400
-    
-    sonda = data.get('sonda')
-    valvulas = data.get('valvulas')
-    preventores = data.get('preventores')
-
-    # criando um BOP
-    bop = BOP(sonda=sonda)
-    
-    # adicionando as válvulas ao BOP criado acima
-    [bop.adiciona_valvula(Valvula(v)) for v in valvulas]
-    
-    # adicionando os preventores ao BOP criado acima
-    [bop.adiciona_preventor(Preventor(p)) for p in preventores]
+    json_data = request.get_json()
     try:
-        # criando conexão com a base
-        session = Session()
-        # adicionando bop
-        session.add(bop)
-        # efetivando o camando de adição de novo item na tabela
-        session.commit()
-        return apresenta_bops([bop]), 200
+        bop_data = BOPSchema(**json_data)
+    except ValidationError as err:
+        return jsonify(err.errors()), 400
 
-    except exc.IntegrityError:
-        session.rollback()
-        # como a duplicidade do nome é a provável razão do IntegrityError
-        error_msg = "BOP dessa sonda já salvo na base :/"
-        return {"mensagem": error_msg}, 409
+    bops_repo = BOPRepository(g.session)
+    
+    try:
+        new_bop = bops_repo.add(
+            sonda=bop_data.sonda,
+            valvulas=bop_data.valvulas,
+            preventores=bop_data.preventores
+        )
+        return new_bop.dict(), 201
+    except RepositoryError as e:
+        return e.to_dict(), 400
 
-    except Exception:
-        # caso um erro fora do previsto
-        error_msg = "Não foi possível salvar novo BOP :/"
-        return {"mensagem": error_msg}, 400
+class BOPPath(BaseModel):
+    bop_id: int = Field(..., description='bop id')
+      
+class BOPPaginationPath(BaseModel):
+    pagina: int = Field(..., description='pagina')
+    por_pagina: int = Field(..., description='por pagina')
+    
+@bp.delete('/bop/<int:bop_id>', responses={"200": BOPDelSchema})
+@jwt_required()
+def del_bop(path: BOPPath):
+    print(path.bop_id)
+    """Deleta um BOP a partir do nome da sonda dona desse equipamento
 
-@bp.get('/', responses={"200": ListagemBOPsSchema})
+    Retorna uma mensagem de confirmação da remoção.
+    """
+    """Delete a booking by ID"""
+    bops_repo = BOPRepository(g.session)
+    if bops_repo.delete(path.bop_id):
+        return {"mensagem": "BOP deletado com sucesso"}, 204
+    return {'mensagem': 'BOP not found'}, 404
+
+@bp.get('/bop', responses={"200": ListagemBOPsSchema})
 @jwt_required()
 def get_bop(query: BOPBuscaSchema):
     """Faz a busca por um BOP do nome da sonda, caso esse campo fique vazio traz toda a lista de BOP do sistema
 
     Retorna uma representação dos BOPs, válvulas e preventores associados.
     """
-    # criando conexão com a base
-    session = Session()
-
     sonda, pagina, por_pagina = query.sonda, query.pagina, query.por_pagina
-    if sonda:
-        bop_sonda = sonda
-        # fazendo a busca
-        bop = session.query(BOP).filter(BOP.sonda.like(f'%{bop_sonda}%')).all()
-        if not bop:
-            # se o bop não foi encontrado
-            error_msg = "BOP não encontrado na base :/"
-            return {"mensagem": error_msg}, 404
-        else:
-            # calcula o total de registros
-            total_registros = session.query(BOP).filter(BOP.sonda.like(f'%{bop_sonda}%')).count()
-
-            # Calcula o total de páginas
-            total_paginas = ceil(total_registros / por_pagina)
-
-            # Calcula se tem próxima página
-            tem_proximo = pagina < total_paginas
-
-            # Calcula se tem página anterior
-            tem_anterior = pagina > 1
-            
-            # Calcula a página atual
-            pagina_atual = pagina
-        
-            # retorna a representação de bop paginada
-            return {
-            "total_paginas": total_paginas,
-            "total_registros": total_registros,
-            "pagina_atual": pagina_atual,
-            "tem_proximo": tem_proximo,
-            "tem_anterior": tem_anterior,
-            "items": apresenta_bops(bop)
-        }, 200
-    else:
-        # trazendo os resultados paginados e em ordem alfabética por nome da sonda
-        offset = (pagina - 1) * por_pagina
-        bops = session.query(BOP).order_by(BOP.sonda).offset(offset).limit(por_pagina).all()
-        
-        # calcula o total de registros
-        total_registros = session.query(BOP).count()
-
-        # Calcula o total de páginas
-        total_paginas = ceil(total_registros / por_pagina)
-
-        # Calcula se tem próxima página
-        tem_proximo = pagina < total_paginas
-
-        # Calcula se tem página anterior
-        tem_anterior = pagina > 1
-        
-        # Calcula a página atual
-        pagina_atual = pagina
-
-        # Realiza a paginaçaõ de forma manual
-        offset = (pagina - 1) * por_pagina
-        bops = session.query(BOP).order_by(BOP.sonda).offset(offset).limit(por_pagina).all()
-        
-        # retorna a representação de bop paginada
-        return {
-            "total_paginas": total_paginas,
-            "total_registros": total_registros,
-            "pagina_atual": pagina_atual,
-            "tem_proximo": tem_proximo,
-            "tem_anterior": tem_anterior,
-            "items": apresenta_bops(bops)
-        }, 200
-
-@bp.delete('/', responses={"200": BOPDelSchema})
-@jwt_required()
-def del_bop(query: BOPDelSchemaById):
-    """Deleta um BOP a partir do nome da sonda dona desse equipamento
-
-    Retorna uma mensagem de confirmação da remoção.
-    """
-    bop_id = query.id
-
-    # criando conexão com a base
-    session = Session()
-        
-    # deletando as válvulas associadas ao BOP em questão
-    del_valvulas(bop_id)
-    # deletando os preventores associados ao BOP em questão
-    del_preventores(bop_id)
     
-    # deletando o bop
-    bop = session.query(BOP).filter(BOP.id == bop_id).delete()
-    session.commit()
-
-    if bop:
-        # retorna a representação da mensagem de confirmação
-        return {"mensagem": "BOP removido", "id": bop_id}
-    else:
-        # se o produto não foi encontrado
-        error_msg = "BOP não encontrado na base :/"
-        return {"mensagem": error_msg}, 404
+    bops_repo = BOPRepository(g.session)
+    bops = bops_repo.list(sonda, pagina, por_pagina)
+    return bops
 
 @bp.get('/sondas', responses={"200": ListagemSondasSchema})
 @jwt_required()
@@ -190,23 +99,3 @@ def get_sondas():
     return {
     "items": [{"id": bop.id ,"sonda": bop.sonda} for bop in bops]
 }, 200
-
-def del_valvulas(bop_id):
-    session = Session()
-    
-    # encontrando as válvulas associadas ao BOP em questão
-    valvulas = session.query(Valvula).filter(Valvula.bop_id == bop_id).all()
-    
-    #deletando válvula por válvula associada a esse BOP
-    [session.query(Valvula).filter(Valvula.id == v.id).delete() for v in valvulas]
-    session.commit()
-
-def del_preventores(bop_id):
-    session = Session()
-    
-    # encontrando os preventores associadas ao BOP em questão
-    preventores = session.query(Preventor).filter(Preventor.bop_id == bop_id).all()
-    
-    #deletando preventor por preventor associada a esse BOP
-    [session.query(Preventor).filter(Preventor.id == p.id).delete() for p in preventores]
-    session.commit()

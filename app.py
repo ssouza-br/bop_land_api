@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask_openapi3 import OpenAPI, Info, Tag
-from flask import redirect
+from flask import redirect, g
 
 from schemas import *
 from flask_cors import CORS
@@ -13,6 +13,7 @@ from blueprints import bop
 from blueprints import valvula
 from blueprints import preventor
 from blueprints import teste
+from models import Session
 
 # JWT Bearer Sample
 jwt = {
@@ -58,6 +59,17 @@ app.register_api(preventor.bp)
 
 # registrando a blueprint de teste
 app.register_api(teste.bp)
+
+
+@app.before_request
+def before_request():
+    g.session = Session()
+
+@app.teardown_request
+def teardown_request(exception=None):
+    if hasattr(g, 'session'):
+        # g.session.remove()
+        pass
 
 # definindo tags
 home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")

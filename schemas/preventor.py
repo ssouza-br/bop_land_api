@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-from model.preventor import Preventor
+from models.preventor import Preventor
 
 class PreventorSchema(BaseModel):
     """ Define como um novo preventor a ser inserido deve ser representado

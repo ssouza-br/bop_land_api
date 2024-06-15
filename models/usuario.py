@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer
 import bcrypt
 
-from  model import Base
+from  models import Base
 
 
 class Usuario(Base):

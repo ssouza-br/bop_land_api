@@ -1,7 +1,7 @@
 from enum import Enum
 from pydantic import BaseModel
 from typing import List
-from model.teste import Teste
+from models.teste import Teste
 from schemas.preventor import PreventorSchema
 from schemas.valvula import ValvulaSchema
 

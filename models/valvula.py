@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from  model import Base
+from  models import Base
 
 
 class Valvula(Base):
@@ -27,3 +27,7 @@ class Valvula(Base):
             acrônimo: acronimo para identificação da válvula.
         """
         self.acronimo = acronimo
+        
+    def to_string(self):
+        return self.acronimo    
+    

@@ -2,9 +2,9 @@ from flask_cors import CORS
 from flask_jwt_extended import jwt_required
 from flask_openapi3 import APIBlueprint, Tag
 
-from model import Session
-from model.bop import BOP
-from model.preventor import Preventor
+from models import Session
+from models.bop import BOP
+from models.preventor import Preventor
 from schemas.error import ErrorSchema
 from schemas.preventor import ListagemPreventoresSchema, PreventorBuscaSchema, apresenta_preventores, apresenta_preventores_objetos
 

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Date, DateTime, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from model import Base
+from models import Base
 
 
 class Teste(Base):

@@ -6,12 +6,12 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_openapi3 import APIBlueprint, Tag
 from sqlalchemy import desc, exc
 
-from model import Session
-from model.bop import BOP
-from model.preventor import Preventor
-from model.teste import Teste
-from model.usuario import Usuario
-from model.valvula import Valvula
+from models import Session
+from models.bop import BOP
+from models.preventor import Preventor
+from models.teste import Teste
+from models.usuario import Usuario
+from models.valvula import Valvula
 from schemas.error import ErrorSchema
 from schemas.teste import AprovaTesteSchema, ListagemTestesSchema, StatusEnum, TesteBuscaSchema, TesteViewSchema, apresenta_testes
 from datetime import datetime

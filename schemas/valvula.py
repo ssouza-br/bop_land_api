@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-from model.valvula import Valvula
+from models.valvula import Valvula
 
 class ValvulaSchema(BaseModel):
     """ Define como uma nova válvula a ser inserido deve ser representada
