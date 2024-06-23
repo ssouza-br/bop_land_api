@@ -1,11 +1,11 @@
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from  models import Base
+from models import Base
 
 
 class Valvula(Base):
-    __tablename__ = 'valvula'
+    __tablename__ = "valvula"
 
     id = Column(Integer, primary_key=True)
     acronimo = Column(String(4000))
@@ -16,10 +16,14 @@ class Valvula(Base):
     # um BOP a válvula.
     bop_id = Column(Integer, ForeignKey("bop.pk_bop"), nullable=False)
     teste_id = Column(Integer, ForeignKey("teste.pk_teste"))
-    bop = relationship("BOP", back_populates="valvulas")
-    teste = relationship("Teste", back_populates="valvulas_testadas")
+    bop = relationship(
+        "BOP",
+        back_populates="valvulas",
+        passive_deletes=True,
+    )
+    teste = relationship("TesteModel", back_populates="valvulas_testadas")
 
-    def __init__(self, acronimo:str):
+    def __init__(self, acronimo: str):
         """
         Cria uma Válvula
 
@@ -27,7 +31,6 @@ class Valvula(Base):
             acrônimo: acronimo para identificação da válvula.
         """
         self.acronimo = acronimo
-        
+
     def to_string(self):
-        return self.acronimo    
-    
+        return self.acronimo

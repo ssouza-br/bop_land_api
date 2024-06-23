@@ -1,11 +1,11 @@
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from  models import Base
+from models import Base
 
 
 class Preventor(Base):
-    __tablename__ = 'preventor'
+    __tablename__ = "preventor"
 
     id = Column(Integer, primary_key=True)
     acronimo = Column(String(4000))
@@ -16,10 +16,14 @@ class Preventor(Base):
     # um BOP ao preventor.
     bop_id = Column(Integer, ForeignKey("bop.pk_bop"), nullable=False)
     teste_id = Column(Integer, ForeignKey("teste.pk_teste"))
-    bop = relationship("BOP", back_populates="preventores")
-    teste = relationship("Teste", back_populates="preventores_testados")
-        
-    def __init__(self, acronimo:str):
+    bop = relationship(
+        "BOP",
+        back_populates="preventores",
+        passive_deletes=True,
+    )
+    teste = relationship("TesteModel", back_populates="preventores_testados")
+
+    def __init__(self, acronimo: str):
         """
         Cria um Preventor
 
@@ -27,8 +31,6 @@ class Preventor(Base):
             acrônimo: acronimo para identificação do preventor.
         """
         self.acronimo = acronimo
-        
+
     def to_string(self):
-        return self.acronimo    
-        
-    
+        return self.acronimo
