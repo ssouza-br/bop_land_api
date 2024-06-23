@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect, g
 
+from blueprints import previsao
 from schemas import *
 from flask_cors import CORS
 
@@ -16,17 +17,9 @@ from blueprints import teste
 from models import Session
 
 # JWT Bearer Sample
-jwt = {
-  "type": "http",
-  "scheme": "bearer",
-  "bearerFormat": "JWT"
-}
+jwt = {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
 
-api_key = {
-    "type": "apiKey",
-    "name": "acess_token",
-    "in": "cookie"
-}
+api_key = {"type": "apiKey", "name": "acess_token", "in": "cookie"}
 
 # security_schemes = {"jwt": jwt, "api_key": api_key}
 security_schemes = {"api_key": api_key}
@@ -36,11 +29,11 @@ app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
 
 # carregando os dados do .env
 load_dotenv()
-app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
 # usado somente com cookies
-app.config['JWT_TOKEN_LOCATION'] = ['cookies']
-app.config['JWT_COOKIE_CSRF_PROTECT'] = False
+app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_COOKIE_CSRF_PROTECT"] = False
 
 CORS(app, supports_credentials=True)
 jwt = JWTManager(app)
@@ -60,22 +53,30 @@ app.register_api(preventor.bp)
 # registrando a blueprint de teste
 app.register_api(teste.bp)
 
+# registrando a blueprint de previsão
+app.register_api(previsao.bp)
+
 
 @app.before_request
 def before_request():
     g.session = Session()
 
+
 @app.teardown_request
 def teardown_request(exception=None):
-    if hasattr(g, 'session'):
+    if hasattr(g, "session"):
         # g.session.remove()
         pass
 
-# definindo tags
-home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")
 
-@app.get('/', tags=[home_tag])
+# definindo tags
+home_tag = Tag(
+    name="Documentação",
+    description="Seleção de documentação: Swagger, Redoc ou RapiDoc",
+)
+
+
+@app.get("/", tags=[home_tag])
 def home():
-    """Redireciona para /openapi, tela que permite a escolha do estilo de documentação.
-    """
-    return redirect('/openapi')
+    """Redireciona para /openapi, tela que permite a escolha do estilo de documentação."""
+    return redirect("/openapi")
