@@ -1,16 +1,34 @@
-from sqlalchemy import Column, Date, DateTime, String, Integer, ForeignKey
+import enum
+from sqlalchemy import (
+    Column,
+    Date,
+    DateTime,
+    String,
+    Integer,
+    ForeignKey,
+    UniqueConstraint,
+    Enum,
+)
 from sqlalchemy.orm import relationship
 
 from models import Base
 
 
-class Teste(Base):
-    __tablename__ = 'teste'
+class TestStatus(enum.Enum):
+    CRIADO = "criado"
+    AGENDAD0 = "agendado"
+    APROVADO = "aprovado"
+    FALHO = "falho"
+
+
+class TesteModel(Base):
+    __tablename__ = "teste"
 
     id = Column("pk_teste", Integer, primary_key=True)
     nome = Column(String(4000))
     data_aprovacao = Column(DateTime)
-    aprovador_id = Column(Integer, ForeignKey("usuario.pk_usuario")) 
+    aprovador_id = Column(Integer, ForeignKey("usuario.pk_usuario"))
+    # aprovador = relationship("Usuario", back_populates="teste")
 
     # Definição do relacionamento entre o teste e o BOP.
     # Aqui está sendo definido a coluna 'bop_id' que vai guardar
@@ -20,8 +38,12 @@ class Teste(Base):
     bop = relationship("BOP", back_populates="testes")
     valvulas_testadas = relationship("Valvula", back_populates="teste")
     preventores_testados = relationship("Preventor", back_populates="teste")
+    status = Column(Enum(TestStatus), nullable=False, default=TestStatus.CRIADO)
 
-    def __init__(self, nome:str, bop_id: int):
+    # Define a unique constraint on the combination of 'nome' and 'bop_id'
+    __table_args__ = (UniqueConstraint("nome", "bop_id", name="_nome_bop_id_uc"),)
+
+    def __init__(self, nome: str, bop_id: int):
         """
         Cria uma Válvula
 
@@ -30,3 +52,30 @@ class Teste(Base):
         """
         self.nome = nome
         self.bop_id = bop_id
+
+    def dict(self):
+        if self.aprovador_id:
+            return {
+                "teste_id": self.id,
+                "bop_id": self.bop_id,
+                "nome": self.nome,
+                "aprovador_id": self.aprovador_id,
+                "data_aprovacao": self.data_aprovacao,
+                "valvulas_testadas": [
+                    valvula.to_string() for valvula in self.valvulas_testadas
+                ],
+                "preventores_testados": [
+                    preventor.to_string() for preventor in self.preventores_testados
+                ],
+            }
+        return {
+            "teste_id": self.id,
+            "bop_id": self.bop_id,
+            "nome": self.nome,
+            "valvulas_testadas": [
+                valvula.to_string() for valvula in self.valvulas_testadas
+            ],
+            "preventores_testados": [
+                preventor.to_string() for preventor in self.preventores_testados
+            ],
+        }
