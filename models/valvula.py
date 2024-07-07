@@ -34,3 +34,9 @@ class Valvula(Base):
 
     def to_string(self):
         return self.acronimo
+
+    def dict(self):
+        return {
+            "id": self.id,
+            "acronimo": self.acronimo,
+        }

@@ -18,6 +18,8 @@ def load_initial_data(session):
 
     # cria uma instancia de BOP
     bop = BOP("NSXX")
+    bop.latitude = -22.46391639
+    bop.longitude = -40.05731667
 
     # adiciona instancias de válvulas ao BOP
     valvulas = [
@@ -55,6 +57,8 @@ def load_initial_data(session):
 
     # cria outra instancia de BOP
     bop2 = BOP("NSYY")
+    bop2.latitude = -24.78901472
+    bop2.longitude = -42.50973611
 
     # adiciona instancias de válvulas ao BOP
     valvulas = [
@@ -108,7 +112,14 @@ else:
 db_url = "sqlite:///%s/bop_land_db.sqlite3" % db_path
 
 # cria a engine de conexão com o banco
-engine = create_engine(db_url, echo=False)
+engine = create_engine(
+    db_url,
+    pool_size=10,  # Default is 5
+    max_overflow=20,  # Default is 10
+    pool_timeout=30,  # Default is 30 seconds
+    pool_recycle=1800,  # Recycle connections after 30 minutes
+    pool_pre_ping=True,  # Check connections before using them
+)
 
 # Instancia um criador de seção com o banco
 SessionFactory = sessionmaker(bind=engine)

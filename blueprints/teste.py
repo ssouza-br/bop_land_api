@@ -35,7 +35,7 @@ bp = APIBlueprint(
     abp_responses={"400": ErrorSchema, "409": ErrorSchema},
     doc_ui=True,
 )
-CORS(bp, supports_credentials=True)
+CORS(bp, supports_credentials=True, origins=["http://localhost:5173"])
 
 
 @bp.post("/teste", responses={"200": TesteViewSchema})
@@ -56,10 +56,10 @@ def add_teste(body: TesteSchema):
     try:
         new_teste = testes_repo.add(
             {
-                "bop_id": teste_data.bop_id,
+                "bopId": teste_data.bopId,
                 "nome": teste_data.nome,
-                "valvulas_testadas": teste_data.valvulas_testadas,
-                "preventores_testados": teste_data.preventores_testados,
+                "valvulasTestadas": teste_data.valvulasTestadas,
+                "preventoresTestados": teste_data.preventoresTestados,
             }
         )
         return new_teste.dict(), 201
@@ -96,10 +96,15 @@ def get_teste(query: TesteBuscaSchema):
 
     Retorna uma representação dos Testes.
     """
-    status, pagina, por_pagina = query.status, query.pagina, query.por_pagina
+    status, bopId, pagina, por_pagina = (
+        query.status,
+        query.bopId,
+        query.pagina,
+        query.por_pagina,
+    )
 
     testes_repo = TesteRepository(g.session)
-    testes = testes_repo.lista_pelo_status(status, pagina, por_pagina)
+    testes = testes_repo.lista_pelo_status(status, bopId, pagina, por_pagina)
     return testes, 200
 
 

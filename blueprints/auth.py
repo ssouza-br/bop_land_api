@@ -1,6 +1,7 @@
 import datetime
+from pydantic import ValidationError
 from sqlalchemy import exc
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response
 from flask_jwt_extended import (
     create_access_token,
     get_jwt_identity,
@@ -10,10 +11,16 @@ from flask_jwt_extended import (
 )
 from flask_openapi3 import APIBlueprint, Tag
 
+from utils.utils import format_error
 from models import Session
 from models.usuario import Usuario
 from schemas.error import ErrorSchema
-from schemas.usuario import UsuarioLoginSchema, UsuarioViewSchema, apresenta_usuario
+from schemas.usuario import (
+    UsuarioLoginSchema,
+    UsuarioRegisterSchema,
+    UsuarioViewSchema,
+    apresenta_usuario,
+)
 
 usuario_tag = Tag(
     name="Usuario", description="Adição, visualização e remoção de usuários à base"
@@ -34,18 +41,14 @@ bp = APIBlueprint(
 
 
 @bp.post("/register", responses={"200": UsuarioViewSchema})
-def cadastro_usuario():
+def cadastro_usuario(form: UsuarioRegisterSchema):
     """Adiciona um novo usuário a base de dados
 
     Retorna uma representação do usuário omitindo a senha.
     """
-    data = request.get_json()
-    if not data:
-        return jsonify({"mensagem": "No JSON data provided"}), 400
-
-    nome = data.get("nome")
-    email = data.get("email")
-    senha = data.get("senha")
+    nome = form.name
+    email = form.email
+    senha = form.password
 
     novo_usuario = Usuario(nome=nome, email=email, senha=senha)
 
@@ -62,18 +65,18 @@ def cadastro_usuario():
         session.rollback()
         # como a duplicidade do nome é a provável razão do IntegrityError
         error_msg = "Usuário já cadastrado com esse email :/"
-        return {"mensagem": error_msg}, 409
+        return jsonify(format_error(error_msg)), 409
 
     except Exception:
         # caso um erro fora do previsto
         error_msg = "Não foi possível salvar novo usuário :/"
-        return {"mensagem": error_msg}, 400
+        return jsonify(format_error(error_msg)), 400
 
 
 @bp.post("/login", responses={"200": UsuarioViewSchema})
 def login(form: UsuarioLoginSchema):
     email = form.email
-    senha = form.senha
+    senha = form.password
 
     session = Session()
     usuario = session.query(Usuario).filter_by(email=email).first()
@@ -84,7 +87,7 @@ def login(form: UsuarioLoginSchema):
             identity=email, expires_delta=datetime.timedelta(minutes=600)
         )
         # cria uma resposta com o token
-        resposta = make_response(access_token)
+        resposta = make_response(jsonify({"message": "Login successful"}))
         # adiciona as infomações necessárias no cookie
         set_access_cookies(resposta, access_token)
         # resposta.set_cookie("acess_token", access_token)
@@ -94,7 +97,7 @@ def login(form: UsuarioLoginSchema):
     else:
         # caso um erro fora do previsto
         error_msg = "Senha ou email não encontrado no sistema :/"
-        return {"mensagem": error_msg}, 400
+        return jsonify(format_error(error_msg)), 400
 
 
 @bp.get("/quemeusou", responses={"200": UsuarioViewSchema})

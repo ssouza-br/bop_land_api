@@ -1,8 +1,12 @@
 from math import ceil
+from schemas.valvula import apresenta_valvulas_objetos
+from schemas.preventor import apresenta_preventores_objetos
 from schemas.bop import BOPSchema
 from exceptions.repository_error import RepositoryError
 from models import Preventor, Valvula, BOP as BOPModel
 from sqlalchemy import exc
+from utils.utils import format_error
+from flask import jsonify
 
 
 class BOPRepository:
@@ -15,6 +19,8 @@ class BOPRepository:
             bop["valvulas"],
             bop["preventores"],
         )
+        if not sonda:
+            raise RepositoryError("Insira o nome da sonda para salvar o BOP :/")
 
         new_bop = BOPModel(
             sonda=sonda,
@@ -37,6 +43,37 @@ class BOPRepository:
         except Exception:
             # caso um erro fora do previsto
             raise RepositoryError("Não foi possível salvar novo BOP :/")
+
+    def get_by_id(self, bop_id):
+        bop = self.session.get(BOPModel, bop_id)
+        if bop:
+            return bop
+        else:
+            raise RepositoryError("Não existe BOP com esse id na base :/")
+
+    def get_valves_by_bop_id(self, bop_id):
+        valvulas = self.session.query(Valvula).filter(Valvula.bop_id == bop_id).all()
+
+        if not valvulas:
+            # se os valvulas não forem encontrados
+            error_msg = "Valvulas não encontradas na base :/"
+            return jsonify(format_error(error_msg))
+        else:
+            # retorna a representação dos preventores
+            return [vlv.dict() for vlv in valvulas]
+
+    def get_preventors_by_bop_id(self, bop_id):
+        preventores = (
+            self.session.query(Preventor).filter(Preventor.bop_id == bop_id).all()
+        )
+
+        if not preventores:
+            # se os preventores não forem encontrados
+            error_msg = "Preventores não encontradas na base :/"
+            return jsonify(format_error(error_msg))
+        else:
+            # retorna a representação dos preventores
+            return [prev.dict() for prev in preventores]
 
     def delete(self, bop_id):
         bop = self.session.get(BOPModel, bop_id)
@@ -79,8 +116,8 @@ class BOPRepository:
         pagina_atual = pagina
 
         return {
-            "dado": [bop.dict() for bop in dados_paginados],
-            "paginacao": {
+            "data": [bop.dict() for bop in dados_paginados],
+            "pagination": {
                 "total_paginas": total_paginas,
                 "total_registros": total_registros,
                 "pagina_atual": pagina_atual,

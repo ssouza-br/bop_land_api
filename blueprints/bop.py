@@ -3,6 +3,8 @@ from flask_cors import CORS
 from flask_jwt_extended import jwt_required
 from flask_openapi3 import APIBlueprint, Tag
 from pydantic import BaseModel, Field, ValidationError
+import xml.etree.ElementTree as ET
+import requests
 
 from schemas.bop import (
     BOPSchema,
@@ -30,7 +32,7 @@ bp = APIBlueprint(
     abp_responses={"400": ErrorSchema, "409": ErrorSchema},
     doc_ui=True,
 )
-CORS(bp, supports_credentials=True)
+CORS(bp, supports_credentials=True, origins=["http://localhost:5173"])
 
 
 @bp.post("/bop", responses={"200": BOPViewSchema})
@@ -85,6 +87,36 @@ def del_bop(path: BOPPath):
         return e.to_dict(), 400
 
 
+@bp.get("/bop/<int:bop_id>/valves", responses={"200": BOPDelSchema})
+@jwt_required()
+def get_valves_by_bop_id(path: BOPPath):
+    """Deleta um BOP a partir do seu id
+
+    Retorna uma mensagem de confirmação da remoção.
+    """
+    bops_repo = BOPRepository(g.session)
+    try:
+        valvulas = bops_repo.get_valves_by_bop_id(path.bop_id)
+        return valvulas, 200
+    except RepositoryError as e:
+        return e.to_dict(), 400
+
+
+@bp.get("/bop/<int:bop_id>/preventors", responses={"200": BOPDelSchema})
+@jwt_required()
+def get_preventors_by_bop_id(path: BOPPath):
+    """Deleta um BOP a partir do seu id
+
+    Retorna uma mensagem de confirmação da remoção.
+    """
+    bops_repo = BOPRepository(g.session)
+    try:
+        preventores = bops_repo.get_preventors_by_bop_id(path.bop_id)
+        return preventores, 200
+    except RepositoryError as e:
+        return e.to_dict(), 400
+
+
 @bp.get("/bop", responses={"200": ListagemBOPsSchema})
 @jwt_required()
 def get_bop(query: BOPBuscaSchema):
@@ -97,6 +129,63 @@ def get_bop(query: BOPBuscaSchema):
     bops_repo = BOPRepository(g.session)
     bops = bops_repo.list(sonda, pagina, por_pagina)
     return bops, 200
+
+
+@bp.get("/previsao/bop/<int:bop_id>")
+@jwt_required()
+def get_weather(path: BOPPath):
+    bops_repo = BOPRepository(g.session)
+    try:
+        bop = bops_repo.get_by_id(path.bop_id)
+        # Get latitude and longitude from query parameters
+        lat = bop.latitude
+        lon = bop.longitude
+    except ValidationError as err:
+        return jsonify(err.errors()), 400
+
+    if not lat or not lon:
+        return jsonify({"error": "Please provide both latitude and longitude"}), 400
+
+    try:
+        # Construct the URL
+        url = f"http://servicos.cptec.inpe.br/XML/cidade/7dias/{lat}/{lon}/previsaoLatLon.xml"
+
+        # Fetch the weather forecast
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+
+        # Parse the XML response
+        root = ET.fromstring(response.content)
+
+        # Extract city and state information
+        city_name = root.find("nome").text
+        state = root.find("uf").text
+        update_date = root.find("atualizacao").text
+
+        # Extract weather forecasts
+        forecasts = []
+        for previsao in root.findall("previsao"):
+            day_forecast = {
+                "date": previsao.find("dia").text,
+                "weather": previsao.find("tempo").text,
+                "max_temp": previsao.find("maxima").text,
+                "min_temp": previsao.find("minima").text,
+                "uv_index": previsao.find("iuv").text,
+            }
+            forecasts.append(day_forecast)
+
+        # Construct the JSON response
+        result = {
+            "city": city_name,
+            "state": state,
+            "updated_on": update_date,
+            "forecasts": forecasts,
+        }
+
+        return jsonify(result)
+
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @bp.get("/sondas", responses={"200": ListagemSondasSchema})

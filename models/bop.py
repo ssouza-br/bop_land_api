@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, Float, String, Integer
 from sqlalchemy.orm import relationship
 
 from models import Base
@@ -10,7 +10,9 @@ class BOP(Base):
     __tablename__ = "bop"
 
     id = Column("pk_bop", Integer, primary_key=True)
-    sonda = Column(String(140), unique=True)
+    sonda = Column(String(140), unique=True, nullable=False)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
 
     # Definição do relacionamento entre o BOP, as válvulas e os preventores.
     # Essa relação é implicita, não está salva na tabela 'bop',

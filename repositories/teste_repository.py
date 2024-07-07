@@ -9,7 +9,7 @@ from models import (
     BOP as BOPModel,
     Usuario as UsuarioModel,
 )
-from sqlalchemy import desc, exc
+from sqlalchemy import and_, desc, exc
 
 
 class TesteRepository:
@@ -18,10 +18,10 @@ class TesteRepository:
 
     def add(self, teste: TesteSchema):
         bop_id, nome, valvulas_testadas, preventores_testados = (
-            teste["bop_id"],
+            teste["bopId"],
             teste["nome"],
-            teste["valvulas_testadas"],
-            teste["preventores_testados"],
+            teste["valvulasTestadas"],
+            teste["preventoresTestados"],
         )
 
         bop = self.session.query(BOPModel).filter(BOPModel.id == bop_id).first()
@@ -34,22 +34,25 @@ class TesteRepository:
 
         # buscando as válvulas existentes por id na base
         valvulas_existentes = (
-            self.session.query(Valvula).filter(Valvula.id.in_(valvulas_testadas)).all()
+            self.session.query(Valvula)
+            .filter(and_(Valvula.id.in_(valvulas_testadas), Valvula.bop_id == bop_id))
+            .all()
         )
 
         valvulas_existentes_id = [vlv.id for vlv in valvulas_existentes]
-
-        if valvulas_existentes_id != valvulas_testadas:
+        if set(valvulas_existentes_id) != set(valvulas_testadas):
             raise RepositoryError("Id de válvula testada não pertence a esse BOP :/")
 
         # buscando os preventores existentes por id na base
         preventores_existentes = (
             self.session.query(Preventor)
-            .filter(Preventor.id.in_(preventores_testados))
+            .filter(
+                and_(Preventor.id.in_(preventores_testados), Preventor.bop_id == bop_id)
+            )
             .all()
         )
         preventores_existentes_id = [prv.id for prv in preventores_existentes]
-        if preventores_existentes_id != preventores_testados:
+        if set(preventores_existentes_id) != set(preventores_testados):
             raise RepositoryError("Id de preventor testada não pertence a esse BOP :/")
 
         # adicionando as válvulas ao Teste criado acima
@@ -85,7 +88,7 @@ class TesteRepository:
             return True
         return False
 
-    def lista_pelo_status(self, status: str, pagina=1, por_pagina=3):
+    def lista_pelo_status(self, status: str, bopId: int, pagina=1, por_pagina=3):
         # status, pagina, por_pagina = (
         #     teste["status"],
         #     teste["pagina"],
@@ -101,7 +104,9 @@ class TesteRepository:
             # coletando todos os registros de testes aprovados
             testes = (
                 query.order_by(desc(TesteModel.data_aprovacao))
-                .filter(TesteModel.data_aprovacao != None)
+                .filter(
+                    and_(TesteModel.data_aprovacao != None, TesteModel.bop_id == bopId)
+                )
                 .offset(offset)
                 .limit(por_pagina)
                 .all()
@@ -124,13 +129,17 @@ class TesteRepository:
         elif status == StatusEnum.em_andamento:
             testes = (
                 query.order_by(desc(TesteModel.data_aprovacao))
-                .filter(TesteModel.data_aprovacao == None)
+                .filter(
+                    and_(TesteModel.data_aprovacao == None, TesteModel.bop_id == bopId)
+                )
                 .offset(offset)
                 .limit(por_pagina)
                 .all()
             )
             # calcula o total de registros
-            total_registros = query.filter(TesteModel.data_aprovacao == None).count()
+            total_registros = query.filter(
+                and_(TesteModel.data_aprovacao == None, TesteModel.bop_id == bopId)
+            ).count()
 
             dados_paginados = []
             for teste in testes:
@@ -152,8 +161,8 @@ class TesteRepository:
 
         # retorna a representação de bop paginada
         return {
-            "dado": dados_paginados,
-            "paginacao": {
+            "data": dados_paginados,
+            "pagination": {
                 "total_paginas": total_paginas,
                 "total_registros": total_registros,
                 "pagina_atual": pagina_atual,

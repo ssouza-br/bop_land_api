@@ -31,10 +31,10 @@ class TesteSchema(BaseModel):
     válvulas testadas e preventores testados.
     """
 
-    bop_id: int
+    bopId: int
     nome: str
-    valvulas_testadas: List[int]
-    preventores_testados: List[int]
+    valvulasTestadas: List[int]
+    preventoresTestados: List[int]
 
 
 class ListagemTestesSchema(BaseModel):
@@ -54,6 +54,7 @@ class TesteBuscaSchema(BaseModel):
     """
 
     status: StatusEnum
+    bopId: int
     pagina: int = 1
     por_pagina: int = 4
 

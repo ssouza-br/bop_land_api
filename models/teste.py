@@ -1,7 +1,6 @@
 import enum
 from sqlalchemy import (
     Column,
-    Date,
     DateTime,
     String,
     Integer,
@@ -56,26 +55,26 @@ class TesteModel(Base):
     def dict(self):
         if self.aprovador_id:
             return {
-                "teste_id": self.id,
-                "bop_id": self.bop_id,
+                "testeId": self.id,
+                "bopId": self.bop_id,
                 "nome": self.nome,
-                "aprovador_id": self.aprovador_id,
-                "data_aprovacao": self.data_aprovacao,
-                "valvulas_testadas": [
+                "aprovadorId": self.aprovador_id,
+                "dataAprovacao": self.data_aprovacao,
+                "valvulasTestadas": [
                     valvula.to_string() for valvula in self.valvulas_testadas
                 ],
-                "preventores_testados": [
+                "preventoresTestados": [
                     preventor.to_string() for preventor in self.preventores_testados
                 ],
             }
         return {
-            "teste_id": self.id,
-            "bop_id": self.bop_id,
+            "testeId": self.id,
+            "bopId": self.bop_id,
             "nome": self.nome,
-            "valvulas_testadas": [
+            "valvulasTestadas": [
                 valvula.to_string() for valvula in self.valvulas_testadas
             ],
-            "preventores_testados": [
+            "preventoresTestados": [
                 preventor.to_string() for preventor in self.preventores_testados
             ],
         }

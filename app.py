@@ -34,6 +34,7 @@ app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 # usado somente com cookies
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_COOKIE_CSRF_PROTECT"] = False
+app.config["JWT_ACCESS_COOKIE_NAME"] = "access_token"
 
 CORS(app, supports_credentials=True)
 jwt = JWTManager(app)
