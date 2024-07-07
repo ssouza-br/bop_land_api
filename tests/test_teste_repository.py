@@ -56,10 +56,10 @@ def setup_bop_and_teste(teste_repo, bop_repo):
 
     # Setup Teste
     teste_data = {
-        "bop_id": bop.id,
+        "bopId": bop.id,
         "nome": "teste 1",
-        "valvulas_testadas": [1, 2, 3],
-        "preventores_testados": [2, 3],
+        "valvulasTestadas": [1, 2, 3],
+        "preventoresTestados": [2, 3],
     }
     teste = teste_repo.add(teste_data)
 
@@ -69,26 +69,26 @@ def setup_bop_and_teste(teste_repo, bop_repo):
 def test_add_teste(teste_repo, setup_bop_and_teste):
     bop, _ = setup_bop_and_teste
     teste_data = {
-        "bop_id": bop.id,
+        "bopId": bop.id,
         "nome": "teste 2",
-        "valvulas_testadas": [1, 2, 3],
-        "preventores_testados": [2, 3],
+        "valvulasTestadas": [1, 2, 3],
+        "preventoresTestados": [2, 3],
     }
 
     teste = teste_repo.add(teste_data)
     assert teste.nome == teste_data["nome"]
-    assert assertValves(teste.valvulas_testadas, teste_data["valvulas_testadas"])
+    assert assertValves(teste.valvulas_testadas, teste_data["valvulasTestadas"])
     assert assertPreventors(
-        teste.preventores_testados, teste_data["preventores_testados"]
+        teste.preventores_testados, teste_data["preventoresTestados"]
     )
 
 
 def test_add_duplicate_teste(teste_repo):
     teste_data = {
-        "bop_id": 1,
+        "bopId": 1,
         "nome": "teste 2",
-        "valvulas_testadas": [1, 2, 3],
-        "preventores_testados": [2, 3],
+        "valvulasTestadas": [1, 2, 3],
+        "preventoresTestados": [2, 3],
     }
 
     with pytest.raises(RepositoryError):
@@ -99,17 +99,19 @@ def test_list_testes_em_andamento(teste_repo, setup_bop_and_teste):
     bop, teste1 = setup_bop_and_teste
 
     teste_data_2 = {
-        "bop_id": bop.id,
+        "bopId": bop.id,
         "nome": "teste 2",
-        "valvulas_testadas": [1],
-        "preventores_testados": [2],
+        "valvulasTestadas": [1],
+        "preventoresTestados": [2],
     }
     teste2 = teste_repo.add(teste_data_2)
 
-    testes = teste_repo.lista_pelo_status(status="em_andamento", pagina=1, por_pagina=2)
-    assert len(testes["dado"]) == 2
-    assert testes["dado"][0] == teste1.dict()
-    assert testes["dado"][1] == teste2.dict()
+    testes = teste_repo.lista_pelo_status(
+        bopId=bop.id, status="em_andamento", pagina=1, por_pagina=2
+    )
+    assert len(testes["data"]) == 2
+    assert testes["data"][0] == teste1.dict()
+    assert testes["data"][1] == teste2.dict()
 
 
 def test_delete_bop(teste_repo, setup_bop_and_teste):

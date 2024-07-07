@@ -2,14 +2,12 @@ from typing import List
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy.exc import IntegrityError
 from models.preventor import Preventor
 from models.valvula import Valvula
 from models import BOP, Base
 from repositories.bop_repository import BOPRepository
 from config import TestConfig
 from exceptions.repository_error import RepositoryError
-from datetime import datetime
 
 
 @pytest.fixture(scope="module")
@@ -81,7 +79,7 @@ def test_list_bops(bop_repo):
     bop_repo.add(bop_data_2)
 
     bops = bop_repo.list(sonda="", pagina=1, por_pagina=2)
-    assert len(bops["dado"]) == 2
+    assert len(bops["data"]) == 2
 
 
 def test_search_by_sonda_name(bop_repo):
@@ -99,8 +97,8 @@ def test_search_by_sonda_name(bop_repo):
     bop2 = bop_repo.add(bop_data_2)
 
     bops = bop_repo.list(sonda="sonda")
-    assert bops["dado"][0] == bop1.dict()
-    assert bops["dado"][1] == bop2.dict()
+    assert bops["data"][0] == bop1.dict()
+    assert bops["data"][1] == bop2.dict()
 
 
 def test_delete_bop(bop_repo):
