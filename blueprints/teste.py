@@ -1,21 +1,20 @@
-from math import ceil
 from zoneinfo import ZoneInfo
 from flask import g, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_openapi3 import APIBlueprint, Tag
 from pydantic import BaseModel, Field, ValidationError
-from sqlalchemy import desc, exc
 
+from utils.utils import format_error
 from exceptions.repository_error import RepositoryError
 from repositories.teste_repository import TesteRepository
 from models import Session
-from models.teste import TesteModel
+from models.teste import TestStatus, TesteModel
 from models.usuario import Usuario
 from schemas.error import ErrorSchema
 from schemas.teste import (
-    AprovaTesteSchema,
     ListagemTestesSchema,
+    StatusEnum,
     TesteBuscaSchema,
     TesteDelSchema,
     TesteSchema,
@@ -108,14 +107,14 @@ def get_teste(query: TesteBuscaSchema):
     return testes, 200
 
 
-@bp.put("/aprovar", responses={"200": ListagemTestesSchema})
+@bp.put("/teste/<int:teste_id>/aprovar", responses={"200": ListagemTestesSchema})
 @jwt_required()
-def aprovar_teste(query: AprovaTesteSchema):
+def aprovar_teste(path: TestePath):
     """Aprova um teste a partir do seu id"""
     # criando conexão com a base
     session = Session()
 
-    teste_id = query.id
+    teste_id = path.teste_id
     # pegando o usuário que aprovou o teste
     current_user = get_jwt_identity()
     aprovador = session.query(Usuario).filter_by(email=current_user).first()
@@ -128,11 +127,14 @@ def aprovar_teste(query: AprovaTesteSchema):
         # atribuindo a data da aprovação
         teste.data_aprovacao = datetime.now(ZoneInfo("America/Sao_Paulo"))
 
+        # mudando o status do teste
+        teste.status = TestStatus.APROVADO
+
         session.commit()
     else:
         # caso um erro fora do previsto
         error_msg = "Teste não encontrado no sistema :/"
-        return {"mensagem": error_msg}, 400
+        return jsonify(format_error(error_msg)), 400
 
     # retorna a representação de bop paginada
     return {

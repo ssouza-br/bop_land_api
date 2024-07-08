@@ -15,7 +15,7 @@ from models import Base
 
 class TestStatus(enum.Enum):
     CRIADO = "criado"
-    AGENDAD0 = "agendado"
+    AGENDADO = "agendado"
     APROVADO = "aprovado"
     FALHO = "falho"
 
@@ -66,6 +66,7 @@ class TesteModel(Base):
                 "preventoresTestados": [
                     preventor.to_string() for preventor in self.preventores_testados
                 ],
+                "status": self.status.value,
             }
         return {
             "testeId": self.id,
