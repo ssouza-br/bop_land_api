@@ -14,13 +14,17 @@ from models.usuario import Usuario
 from schemas.error import ErrorSchema
 from schemas.teste import (
     ListagemTestesSchema,
-    StatusEnum,
     TesteBuscaSchema,
     TesteDelSchema,
     TesteSchema,
     TesteViewSchema,
 )
 from datetime import datetime
+
+
+class TestePath(BaseModel):
+    teste_id: int = Field(..., description="teste id")
+
 
 teste_tag = Tag(name="Teste", description="Adição e visualização de testes à base")
 security = [{"api_key": []}]
@@ -66,26 +70,19 @@ def add_teste(body: TesteSchema):
         return e.to_dict(), 400
 
 
-class TestePath(BaseModel):
-    teste_id: int = Field(..., description="teste id")
-
-
-class BOPPaginationPath(BaseModel):
-    pagina: int = Field(..., description="pagina")
-    por_pagina: int = Field(..., description="por pagina")
-
-
 @bp.delete("/teste/<int:teste_id>", responses={"200": TesteDelSchema})
 @jwt_required()
-def del_bop(path: TestePath):
+def del_teste(path: TestePath):
     """Deleta um teste a partir do seu id
 
     Retorna uma mensagem de confirmação da remoção.
     """
     testes_repo = TesteRepository(g.session)
-    if testes_repo.delete(path.teste_id):
+    try:
+        testes_repo.delete(path.teste_id)
         return {"mensagem": "Teste deletado com sucesso"}, 204
-    return {"mensagem": "Teste not found"}, 404
+    except RepositoryError as e:
+        return e.to_dict(), 400
 
 
 @bp.get("/teste", responses={"200": ListagemTestesSchema})
@@ -95,15 +92,16 @@ def get_teste(query: TesteBuscaSchema):
 
     Retorna uma representação dos Testes.
     """
-    status, bopId, pagina, por_pagina = (
+    status, bopId, aprovadorId, pagina, por_pagina = (
         query.status,
         query.bopId,
+        query.aprovadorId,
         query.pagina,
         query.por_pagina,
     )
 
     testes_repo = TesteRepository(g.session)
-    testes = testes_repo.lista_pelo_status(status, bopId, pagina, por_pagina)
+    testes = testes_repo.listar(status, bopId, aprovadorId, pagina, por_pagina)
     return testes, 200
 
 

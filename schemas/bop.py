@@ -6,6 +6,8 @@ class BOPSchema(BaseModel):
     """Define como um novo produto a ser inserido deve ser representado"""
 
     sonda: str
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
     valvulas: List[str]
     preventores: List[str]
 

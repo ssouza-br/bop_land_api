@@ -5,6 +5,7 @@ from models.usuario import Usuario
 class UsuarioViewSchema(BaseModel):
     """Define como um novo usuário a ser inserido deve ser representado"""
 
+    id: int
     name: str
     email: str
 
@@ -28,4 +29,4 @@ def apresenta_usuario(usuario: Usuario):
     """Retorna uma representação do usuário seguindo o schema definido em
     usuarioViewSchema.
     """
-    return {"nome": usuario.nome, "email": usuario.email}
+    return {"id": usuario.id, "nome": usuario.nome, "email": usuario.email}

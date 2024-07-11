@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect, g
 
-from blueprints import previsao
 from schemas import *
 from flask_cors import CORS
 
@@ -53,9 +52,6 @@ app.register_api(preventor.bp)
 
 # registrando a blueprint de teste
 app.register_api(teste.bp)
-
-# registrando a blueprint de previsão
-app.register_api(previsao.bp)
 
 
 @app.before_request

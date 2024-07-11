@@ -1,14 +1,14 @@
 from math import ceil
-from typing import List
-from schemas.teste import StatusEnum, TesteSchema
-from exceptions.repository_error import RepositoryError
-from models import (
-    Preventor,
-    Valvula,
-    TesteModel,
-    BOP as BOPModel,
-    Usuario as UsuarioModel,
+from typing import Dict, Optional
+from models.teste import TestStatus
+from specifications.testeSpec import (
+    AprovadorIdSpecification,
+    BopIdSpecification,
+    StatusSpecification,
 )
+from schemas.teste import TesteSchema
+from exceptions.repository_error import RepositoryError
+from models import Preventor, Valvula, TesteModel, BOP as BOPModel
 from sqlalchemy import and_, desc, exc
 
 
@@ -27,8 +27,6 @@ class TesteRepository:
         bop = self.session.query(BOPModel).filter(BOPModel.id == bop_id).first()
         if not bop:
             raise RepositoryError("BOP id inválido")
-
-        # print(bop_id, nome, valvulas_testadas, preventores_testados)
 
         new_teste = TesteModel(nome=nome, bop_id=bop_id)
 
@@ -76,96 +74,73 @@ class TesteRepository:
             raise RepositoryError("Não foi possível salvar novo Teste :/")
 
     def delete(self, teste_id):
-        teste = self.session.get(TesteModel, teste_id)
+        teste: TesteModel = self.session.get(TesteModel, teste_id)
         if teste:
-            # deletando as válvulas associadas ao teste em questão
-            self.del_valvulas(teste_id)
-            # deletando os preventores associados ao teste em questão
-            self.del_preventores(teste_id)
+            if teste.status == TestStatus.APROVADO:
+                raise RepositoryError("Não é possível deletar um teste aprovado")
+            else:
+                # deletando as válvulas associadas ao teste em questão
+                self.del_valvulas(teste_id)
+                # deletando os preventores associados ao teste em questão
+                self.del_preventores(teste_id)
 
-            self.session.delete(teste)
-            self.session.commit()
-            return True
-        return False
+                self.session.delete(teste)
+                self.session.commit()
+        else:
+            raise RepositoryError("Teste id inválido")
 
-    def lista_pelo_status(self, status: str, bopId: int, pagina=1, por_pagina=3):
-        # status, pagina, por_pagina = (
-        #     teste["status"],
-        #     teste["pagina"],
-        #     teste["por_pagina"],
-        # )
+    def listar(
+        self,
+        status: Optional[str] = None,
+        bopId: Optional[int] = None,
+        aprovadorId: Optional[int] = None,
+        pagina=1,
+        por_pagina=3,
+    ) -> Dict:
         offset = (pagina - 1) * por_pagina
 
         query = self.session.query(TesteModel)
 
-        # lista os testes a partir do status
-        # aprovado, caso haja data no campo data_aprovacao
-        if status == StatusEnum.aprovado:
-            # coletando todos os registros de testes aprovados
-            testes = (
-                query.order_by(desc(TesteModel.data_aprovacao))
-                .filter(
-                    and_(TesteModel.data_aprovacao != None, TesteModel.bop_id == bopId)
-                )
-                .offset(offset)
-                .limit(por_pagina)
-                .all()
-            )
-            # calcula o total de registros
-            total_registros = query.filter(TesteModel.data_aprovacao != None).count()
+        # Apply status specification
+        if status is not None:
+            status_specification = StatusSpecification(status)
+            query = status_specification.is_satisfied_by(query)
 
-            # pegando o nome do aprovador pelo usuario_id
-            dados_paginados = []
-            for teste in testes:
-                aprovador = (
-                    self.session.query(UsuarioModel)
-                    .filter(UsuarioModel.id == teste.aprovador_id)
-                    .first()
-                    if teste.aprovador_id
-                    else None
-                )
-                dados_paginados.append(teste.dict())
-        # em_andamento caso contrário
-        elif status == StatusEnum.em_andamento:
-            testes = (
-                query.order_by(desc(TesteModel.data_aprovacao))
-                .filter(
-                    and_(TesteModel.data_aprovacao == None, TesteModel.bop_id == bopId)
-                )
-                .offset(offset)
-                .limit(por_pagina)
-                .all()
-            )
-            # calcula o total de registros
-            total_registros = query.filter(
-                and_(TesteModel.data_aprovacao == None, TesteModel.bop_id == bopId)
-            ).count()
+        # Apply bopId specification
+        if bopId is not None:
+            bopid_specification = BopIdSpecification(bopId)
+            query = bopid_specification.is_satisfied_by(query)
 
-            dados_paginados = []
-            for teste in testes:
-                dados_paginados.append(teste.dict())
+        # Apply aprovadorId specification
+        if aprovadorId is not None:
+            aprovadorid_specification = AprovadorIdSpecification(aprovadorId)
+            query = aprovadorid_specification.is_satisfied_by(query)
 
+        if status == "APROVADO":
+            query = query.order_by(desc(TesteModel.data_aprovacao))
         else:
-            raise NameError
-        # Calcula o total de páginas
+            query = query.order_by(TesteModel.nome)
+
+        total_registros = query.count()
+        query = query.limit(por_pagina).offset(offset)
+
+        testes = query.all()
+
+        dados_paginados = []
+        for teste in testes:
+            dados_paginados.append(teste.dict())
+
+        # Paginate results
         total_paginas = ceil(total_registros / por_pagina)
-
-        # Calcula se tem próxima página
         tem_proximo = pagina < total_paginas
-
-        # Calcula se tem página anterior
         tem_anterior = pagina > 1
 
-        # Calcula a página atual
-        pagina_atual = pagina
-
-        # retorna a representação de bop paginada
         return {
             "data": dados_paginados,
             "pagination": {
                 "total_paginas": total_paginas,
                 "total_registros": total_registros,
-                "pagina_atual": pagina_atual,
+                "pagina_atual": pagina,
                 "tem_proximo": tem_proximo,
                 "tem_anterior": tem_anterior,
             },

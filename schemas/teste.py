@@ -1,6 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from models.teste import TesteModel
 from schemas.preventor import PreventorSchema
 from schemas.valvula import ValvulaSchema
@@ -53,8 +53,9 @@ class TesteBuscaSchema(BaseModel):
     feita apenas com base no nome da sonda dona do BOP.
     """
 
-    status: StatusEnum
-    bopId: int
+    status: Optional[str] = None
+    bopId: Optional[int] = None
+    aprovadorId: Optional[int] = None
     pagina: int = 1
     por_pagina: int = 4
 
