@@ -88,7 +88,7 @@ def del_teste(path: TestePath):
 @bp.get("/teste", responses={"200": ListagemTestesSchema})
 @jwt_required()
 def get_teste(query: TesteBuscaSchema):
-    """Faz a busca por todos os Testes presentes no sistema, a partir do seu status no sistema: aprovado ou em_andamento
+    """Faz a busca por todos os Testes presentes no sistema, a partir do bop_id, aprovador_id e status no sistema: aprovado ou criado
 
     Retorna uma representação dos Testes.
     """

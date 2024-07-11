@@ -14,17 +14,17 @@ class BOPRepository:
         self.session = session
 
     def add(self, bop: BOPSchema):
-        sonda, valvulas, preventores = (
+        sonda, latitude, longitude, valvulas, preventores = (
             bop["sonda"],
+            bop["latitude"],
+            bop["longitude"],
             bop["valvulas"],
             bop["preventores"],
         )
         if not sonda:
             raise RepositoryError("Insira o nome da sonda para salvar o BOP :/")
 
-        new_bop = BOPModel(
-            sonda=sonda,
-        )
+        new_bop = BOPModel(sonda=sonda, latitude=latitude, longitude=longitude)
 
         # adicionando as válvulas ao BOP criado acima
         [new_bop.adiciona_valvula(Valvula(v)) for v in valvulas]

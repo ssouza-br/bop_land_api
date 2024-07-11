@@ -22,7 +22,7 @@ class BOP(Base):
     preventores = relationship("Preventor", back_populates="bop", cascade="all, delete")
     testes = relationship("TesteModel", back_populates="bop")
 
-    def __init__(self, sonda: str):
+    def __init__(self, sonda: str, latitude: float, longitude: float):
         """
         Cria um BOP
 
@@ -30,6 +30,8 @@ class BOP(Base):
             sonda: sonda na qual esse BOP pertence
         """
         self.sonda = sonda
+        self.latitude = latitude
+        self.longitude = longitude
 
     def adiciona_valvula(self, valvula: Valvula):
         """Adiciona uma nova válvula ao BOP"""

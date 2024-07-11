@@ -3,30 +3,34 @@ from flask_jwt_extended import jwt_required
 from flask_openapi3 import APIBlueprint, Tag
 
 from models import Session
-from models.bop import BOP
 from models.preventor import Preventor
 from schemas.error import ErrorSchema
-from schemas.preventor import ListagemPreventoresSchema, PreventorBuscaSchema, apresenta_preventores, apresenta_preventores_objetos
+from schemas.preventor import (
+    apresenta_preventores,
+)
 
-preventor_tag = Tag(name="Preventor", description="Visualização de preventores persistidos na base")
+preventor_tag = Tag(
+    name="Preventor", description="Visualização de preventores persistidos na base"
+)
 security = [{"jwt": []}]
 
-bp = APIBlueprint('preventor',
-                  __name__, 
-                  url_prefix='/preventor', 
-                  abp_tags=[preventor_tag], 
-                  abp_security=security,
-                  abp_responses={"400": ErrorSchema, "409": ErrorSchema}, 
-                  doc_ui=True)
+bp = APIBlueprint(
+    "/preventor",
+    __name__,
+    url_prefix="/api",
+    abp_tags=[preventor_tag],
+    abp_security=security,
+    abp_responses={"400": ErrorSchema, "409": ErrorSchema},
+    doc_ui=True,
+)
 CORS(bp, supports_credentials=True)
 
-@bp.get('/all', tags=[preventor_tag])
+
+@bp.get("/preventor", tags=[preventor_tag])
 @jwt_required()
 def get_preventores():
-    """Faz a busca por todas os preventores já cadastrados
+    """Retorna uma lista com todos os preventores distintos presentes no sistema."""
 
-    Retorna uma representação da listagem de Preventores.
-    """
     # criando conexão com a base
     session = Session()
     # fazendo a busca
@@ -38,36 +42,3 @@ def get_preventores():
     else:
         # retorna a representação de BOP
         return apresenta_preventores(preventores), 200
-
-@bp.get('/', responses={"200": ListagemPreventoresSchema})
-@jwt_required()
-def get_bop(query: PreventorBuscaSchema):
-    """Faz a busca de todas as válvulas de um BOP através do bop_id
-
-    Retorna uma representação das válvulas.
-    """
-    bop_id = query.bop_id
-
-    # criando conexão com a base
-    session = Session()
-
-    # encontrando o bop pelo nome da sonda
-    bop = session.query(BOP).filter(BOP.id == bop_id).first()
-    
-    if not bop:
-        # se o bop não foi encontrado
-        error_msg = "BOP não encontrado na base :/"
-        return {"mensagem": error_msg}, 404
-    else:
-        bop_id = bop.id
-        
-        # fazendo a busca dos preventores
-        preventores = session.query(Preventor).filter(Preventor.bop_id == bop_id).all()
-        
-        if not preventores:
-            # se os preventores não forem encontrados
-            error_msg = "Preventores não encontradas na base :/"
-            return {"mensagem": error_msg}, 404
-        else:
-            # retorna a representação dos preventores
-            return apresenta_preventores_objetos(preventores), 200

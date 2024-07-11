@@ -6,6 +6,8 @@ from pydantic import BaseModel, Field, ValidationError
 import xml.etree.ElementTree as ET
 import requests
 
+from schemas.preventor import ListagemPreventoresSchema
+from schemas.valvula import ListagemValvulasSchema
 from schemas.bop import (
     BOPSchema,
     ListagemBOPsSchema,
@@ -35,6 +37,15 @@ bp = APIBlueprint(
 CORS(bp, supports_credentials=True, origins=["http://localhost:5173"])
 
 
+class BOPPath(BaseModel):
+    bop_id: int = Field(..., description="bop id")
+
+
+class BOPPaginationPath(BaseModel):
+    pagina: int = Field(..., description="pagina")
+    por_pagina: int = Field(..., description="por pagina")
+
+
 @bp.post("/bop", responses={"200": BOPViewSchema})
 @jwt_required()
 def add_bop(body: BOPSchema):
@@ -54,6 +65,8 @@ def add_bop(body: BOPSchema):
         new_bop = bops_repo.add(
             {
                 "sonda": bop_data.sonda,
+                "latitude": bop_data.latitude,
+                "longitude": bop_data.longitude,
                 "valvulas": bop_data.valvulas,
                 "preventores": bop_data.preventores,
             }
@@ -61,15 +74,6 @@ def add_bop(body: BOPSchema):
         return new_bop.dict(), 201
     except RepositoryError as e:
         return e.to_dict(), 400
-
-
-class BOPPath(BaseModel):
-    bop_id: int = Field(..., description="bop id")
-
-
-class BOPPaginationPath(BaseModel):
-    pagina: int = Field(..., description="pagina")
-    por_pagina: int = Field(..., description="por pagina")
 
 
 @bp.delete("/bop/<int:bop_id>", responses={"200": BOPDelSchema})
@@ -87,12 +91,12 @@ def del_bop(path: BOPPath):
         return e.to_dict(), 400
 
 
-@bp.get("/bop/<int:bop_id>/valves", responses={"200": BOPDelSchema})
+@bp.get("/bop/<int:bop_id>/valves", responses={"200": ListagemValvulasSchema})
 @jwt_required()
 def get_valves_by_bop_id(path: BOPPath):
-    """Deleta um BOP a partir do seu id
+    """Retorna as válvulas do BOP a partir do seu id
 
-    Retorna uma mensagem de confirmação da remoção.
+    Retorna uma lista com todas válvulas do respectivo BOP.
     """
     bops_repo = BOPRepository(g.session)
     try:
@@ -102,12 +106,12 @@ def get_valves_by_bop_id(path: BOPPath):
         return e.to_dict(), 400
 
 
-@bp.get("/bop/<int:bop_id>/preventors", responses={"200": BOPDelSchema})
+@bp.get("/bop/<int:bop_id>/preventors", responses={"200": ListagemPreventoresSchema})
 @jwt_required()
 def get_preventors_by_bop_id(path: BOPPath):
-    """Deleta um BOP a partir do seu id
+    """Retorna os preventores do BOP a partir do seu id
 
-    Retorna uma mensagem de confirmação da remoção.
+    Retorna uma lista com todos preventores do respectivo BOP.
     """
     bops_repo = BOPRepository(g.session)
     try:
@@ -120,7 +124,7 @@ def get_preventors_by_bop_id(path: BOPPath):
 @bp.get("/bop", responses={"200": ListagemBOPsSchema})
 @jwt_required()
 def get_bop(query: BOPBuscaSchema):
-    """Faz a busca por um BOP do nome da sonda, caso esse campo fique vazio traz toda a lista de BOP do sistema
+    """Faz a busca por um BOP do nome da sonda, caso esse campo fique vazio traz toda a lista paginada de BOPs do sistema
 
     Retorna uma representação dos BOPs, válvulas e preventores associados.
     """
@@ -134,6 +138,11 @@ def get_bop(query: BOPBuscaSchema):
 @bp.get("/previsao/bop/<int:bop_id>")
 @jwt_required()
 def get_weather(path: BOPPath):
+    """Faz acesso a API externa CPTEC-INPE (http://servicos.cptec.inpe.br/XML/#req-previsao-7-dias) retornando a previsão do tempo para os últimos 7 dias na locação do BOP (latitude e longitude)
+
+    Retorna uma representação de previsão do tempo com o nome da cidade e previsão de temperaturas min/max para os próximos 7 dias.
+    """
+
     bops_repo = BOPRepository(g.session)
     try:
         bop = bops_repo.get_by_id(path.bop_id)
@@ -192,7 +201,7 @@ def get_weather(path: BOPPath):
 @jwt_required()
 def get_sondas():
     """
-    Retorna todas as sondas com BOPs salvos no sistema
+    Retorna lista de todas as sondas com BOPs salvos no sistema
     """
     # criando conexão com a base
     session = Session()

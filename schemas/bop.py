@@ -42,6 +42,8 @@ class BOPViewSchema(BaseModel):
 
     bop_id: int
     sonda: str
+    latitude: float
+    longitude: float
     valvulas: List[str]
     preventores: List[str]
 
