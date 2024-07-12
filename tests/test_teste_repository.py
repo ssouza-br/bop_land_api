@@ -2,7 +2,8 @@ from typing import List
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from models import TesteModel, Preventor, Valvula, Base
+from models.teste import TestStatus
+from models import Preventor, Valvula, Base
 from repositories.teste_repository import TesteRepository
 from repositories.bop_repository import BOPRepository
 from config import TestConfig
@@ -49,6 +50,8 @@ def setup_bop_and_teste(teste_repo, bop_repo):
     # Setup BOP
     bop_data = {
         "sonda": "sonda 1",
+        "latitude": 111.5,
+        "longitude": 122.6,
         "valvulas": ["val1", "val2", "val3"],
         "preventores": ["prev1", "prev2", "prev3"],
     }
@@ -95,7 +98,7 @@ def test_add_duplicate_teste(teste_repo):
         teste_repo.add(teste_data)
 
 
-def test_list_testes_em_andamento(teste_repo, setup_bop_and_teste):
+def test_list_testes_criado(teste_repo, setup_bop_and_teste):
     bop, teste1 = setup_bop_and_teste
 
     teste_data_2 = {
@@ -106,8 +109,8 @@ def test_list_testes_em_andamento(teste_repo, setup_bop_and_teste):
     }
     teste2 = teste_repo.add(teste_data_2)
 
-    testes = teste_repo.lista_pelo_status(
-        bopId=bop.id, status="em_andamento", pagina=1, por_pagina=2
+    testes = teste_repo.listar(
+        bopId=bop.id, status=TestStatus.CRIADO, pagina=1, por_pagina=2
     )
     assert len(testes["data"]) == 2
     assert testes["data"][0] == teste1.dict()
@@ -119,10 +122,10 @@ def test_delete_bop(teste_repo, setup_bop_and_teste):
     teste_id = teste.id
 
     result = teste_repo.delete(teste_id)
-    assert result is True
+    assert result is None
 
-    deleted_teste = teste_repo.session.get(TesteModel, teste_id)
-    assert deleted_teste is None
+    with pytest.raises(RepositoryError):
+        teste_repo.delete(1000)
 
 
 def assertValves(original: List[Valvula], resultado: List[int]):

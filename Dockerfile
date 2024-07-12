@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia o código-fonte para o diretório de trabalho
 COPY . .
 
+# Run pytest to test the application
+RUN pytest
+
 EXPOSE 5000
 
 # Define o comando de execução da API

@@ -43,6 +43,8 @@ def bop_repo(session):
 def test_add_bop(bop_repo):
     bop_data = {
         "sonda": "sonda 1",
+        "latitude": 123.3,
+        "longitude": 123.4,
         "valvulas": ["val1", "val2", "val3"],
         "preventores": ["prev1", "prev2", "prev3"],
     }
@@ -55,6 +57,8 @@ def test_add_bop(bop_repo):
 def test_add_duplicate_bop(bop_repo):
     bop_data = {
         "sonda": "sonda 1",
+        "latitude": 123.3,
+        "longitude": 123.4,
         "valvulas": ["val1", "val2", "val3"],
         "preventores": ["prev1", "prev2", "prev3"],
     }
@@ -67,11 +71,15 @@ def test_add_duplicate_bop(bop_repo):
 def test_list_bops(bop_repo):
     bop_data_1 = {
         "sonda": "sonda 1",
+        "latitude": 123.3,
+        "longitude": 123.4,
         "valvulas": ["val1", "val2", "val3"],
         "preventores": ["prev1", "prev2", "prev3"],
     }
     bop_data_2 = {
         "sonda": "sonda 2",
+        "latitude": 111.5,
+        "longitude": 122.6,
         "valvulas": ["val3", "val4"],
         "preventores": ["prev3"],
     }
@@ -85,11 +93,15 @@ def test_list_bops(bop_repo):
 def test_search_by_sonda_name(bop_repo):
     bop_data_1 = {
         "sonda": "sonda 1",
+        "latitude": 123.3,
+        "longitude": 123.4,
         "valvulas": ["val1", "val2", "val3"],
         "preventores": ["prev1", "prev2", "prev3"],
     }
     bop_data_2 = {
         "sonda": "sonda 2",
+        "latitude": 111.5,
+        "longitude": 122.6,
         "valvulas": ["val3", "val4"],
         "preventores": ["prev3"],
     }
@@ -104,6 +116,8 @@ def test_search_by_sonda_name(bop_repo):
 def test_delete_bop(bop_repo):
     bop_data = {
         "sonda": "sonda 1",
+        "latitude": 111.5,
+        "longitude": 122.6,
         "valvulas": ["val1", "val2", "val3"],
         "preventores": ["prev1", "prev2", "prev3"],
     }
